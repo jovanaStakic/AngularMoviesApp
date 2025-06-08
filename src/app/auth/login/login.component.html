@@ -1,17 +1,25 @@
-<form [formGroup]="loginForm">
-    <mat-form-field >
-        <mat-label>Korisničko ime</mat-label>
-        <input matInput formControlName="korisnickoIme" placeholder="Korisničko ime" required>
-        <mat-error *ngIf="loginForm.get('korisnickoIme')!.hasError('required') && loginForm.get('username')!.touched">
-            Korisničko ime je obavezno
-        </mat-error>
-    </mat-form-field>
-    <mat-form-field>
-        <mat-label>Sifra</mat-label>
-        <input matInput formControlName="sifra" placeholder="Sifra" type="password" required>
-        <mat-error *ngIf="loginForm.get('sifra')!.hasError('required') && loginForm.get('password')!.touched">
-            Lozinka je obavezna
-        </mat-error>
-    </mat-form-field>
-    <button mat-raised-button color="primary" (click)="login()" [disabled]="loginForm.invalid">Prijavi se</button>
-</form>
+<div class="login-container">
+    <mat-card class="login-card">
+        <h1 class="login-title">Prijavi se</h1>
+        <form [formGroup]="loginForm">
+            
+            <mat-form-field >
+                <mat-label>Korisničko ime</mat-label>
+                <input matInput formControlName="korisnickoIme" placeholder="Korisničko ime" required>
+                <mat-error *ngIf="loginForm.get('korisnickoIme')!.hasError('required') && loginForm.get('korisnickoIme')!.touched">
+                    Korisničko ime je obavezno
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Sifra</mat-label>
+                <input matInput formControlName="sifra" placeholder="Sifra" type="password" required>
+                <mat-error *ngIf="loginForm.get('sifra')!.hasError('required') && loginForm.get('sifra')!.touched">
+                    Lozinka je obavezna
+                </mat-error>
+            </mat-form-field>
+            <button mat-raised-button color="primary" (click)="login()" [disabled]="loginForm.invalid">Prijavi se</button>
+        </form>
+        <a routerLink="/register">Nemas nalog? Kreiraj ga.</a>
+    </mat-card>
+</div>
+

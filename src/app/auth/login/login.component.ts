@@ -24,4 +24,8 @@ export class LoginComponent {
    }
   });
   }
+
+  goToRegisterPage(){
+    
+  }
 }

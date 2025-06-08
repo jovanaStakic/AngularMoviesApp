@@ -4,6 +4,9 @@
     align-items: center;
     position: relative;
 
+  background-color:  #ECF0F1;  
+  color:#1B263B;             
+
     .menu-container {
         position: relative;
 
@@ -36,7 +39,7 @@
 }
 
 mat-toolbar{
-    background: aquamarine;
+    background: #ECF0F1;
     color: #000;
 }
 
@@ -74,7 +77,8 @@ mat-toolbar{
 
 
 .logo {
-    height: 40px;
+    height: 60px;
+    width: 90px;
 }
 
 .spacer {

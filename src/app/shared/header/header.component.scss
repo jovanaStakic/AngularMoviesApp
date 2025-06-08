@@ -1,0 +1,105 @@
+.toolbar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
+    .menu-container {
+        position: relative;
+
+        .submenu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 8px 0;
+            z-index: 10;
+
+            a {
+                display: block;
+                padding: 8px 16px;
+                color: #000;
+                text-decoration: none;
+
+                &:hover {
+                    background: #f0f0f0;
+                }
+            }
+        }
+
+        &:hover .submenu {
+            display: block;
+        }
+    }
+}
+
+mat-toolbar{
+    background: aquamarine;
+    color: #000;
+}
+
+.menu-container {
+    display: flex;
+    gap: 24px;
+    
+}
+
+.logo-container {
+    position: absolute;
+    left: 16px;
+}
+
+.sing-out-container {
+    position: absolute;
+    right: 16px;
+}
+
+.sing-out-container button {
+    background: none;
+    border: none;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+    padding: 0;
+    text-transform: none;
+    box-shadow: none;
+    font-size: 0.875rem; 
+}
+
+.sing-out-container button:hover {
+    color: #1E90FF;
+}
+
+
+.logo {
+    height: 40px;
+}
+
+.spacer {
+    flex: 1;
+}
+
+.menu-container button[mat-button] {
+    position: relative;
+    overflow: hidden;
+}
+
+.menu-container button[mat-button]::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: currentColor;
+    transition: width 0.3s ease;
+}
+
+.menu-container button[mat-button]:hover{
+    color: #1E90FF; 
+}
+.menu-container button[mat-button]:hover::after {
+    width: 100%;
+}

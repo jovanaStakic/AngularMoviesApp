@@ -2,7 +2,7 @@
     <div class="menu-container">
       <button mat-button [matMenuTriggerFor]="menuFilmovi">Filmovi</button>
       <mat-menu #menuFilmovi="matMenu">
-        <button mat-menu-item>Dodaj film</button>
+        <button mat-menu-item routerLink="/createFilm">Dodaj film</button>
         <button mat-menu-item>Pretrazi filmove</button>
       </mat-menu>
   
@@ -23,10 +23,10 @@
     </div>
   
     <div class="logo-container">
-      <img src="assets/logo.png" alt="Logo" class="logo" />
+      <a routerLink="home"><img src="assets/logo.png" alt="Logo" class="logo" /></a>
     </div>
 
     <div class="sing-out-container">
-      <button class="sing-out-button">Sing out</button>
+      <button class="sing-out-button" (click)="singOut()">Sing out</button>
       </div>
   </mat-toolbar>

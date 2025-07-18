@@ -1,4 +1,6 @@
 import { Component, ViewEncapsulation } from '@angular/core';
+import { AuthService } from '../../auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -9,4 +11,10 @@ import { Component, ViewEncapsulation } from '@angular/core';
 })
 export class HeaderComponent {
 
+  constructor(private authService:AuthService, private router: Router){}
+
+  singOut(){
+    this.authService.logOut();
+    this.router.navigate(['login']);
+  }
 }

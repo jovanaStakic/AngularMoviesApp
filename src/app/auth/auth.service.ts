@@ -2,7 +2,7 @@ import { Injectable,inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';  
 import { LoginKorisnik, RegisterKorisnik } from '../model/app.model';
 import { environment } from '../enviroments/enviroment';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { BehaviorSubject, map, Observable, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +24,8 @@ export class AuthService {
 
   public login(loginKorisnik:LoginKorisnik):Observable<string>{
     const url = `${this.apiUrl}/login`;
-    return this.httpClient.post<string>(url,loginKorisnik).pipe(
+    return this.httpClient.post<{ token: string }>(url,loginKorisnik).pipe( 
+      map(response => response.token),
       tap(token=>{
         localStorage.setItem("jwt",token)
         this.loggedIn$.next(true);

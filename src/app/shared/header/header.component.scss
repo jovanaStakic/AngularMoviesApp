@@ -15,7 +15,7 @@
             position: absolute;
             top: 100%;
             left: 0;
-            background: white;
+            background:  #ECF0F1;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             padding: 8px 0;
             z-index: 10;
@@ -38,7 +38,7 @@
     }
 }
 
-mat-toolbar{
+.mat-toolbar.toolbar{
     background: #ECF0F1;
     color: #000;
 }
@@ -77,8 +77,8 @@ mat-toolbar{
 
 
 .logo {
-    height: 60px;
-    width: 90px;
+    height: 50px;
+    width: 150px;
 }
 
 .spacer {

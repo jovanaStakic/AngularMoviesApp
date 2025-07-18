@@ -1,0 +1,125 @@
+:host {
+  display: flex;
+  justify-content: center;
+  padding: 2rem 1rem;
+  background: #fafafa;
+}
+
+mat-card {
+  width: 100%;
+  max-width: 800px;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  background: #fff;
+}
+
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+mat-form-field {
+  width: 100%;
+  font-size: 0.9rem;
+}
+
+
+:host ::ng-deep .mat-form-field-appearance-outline .mat-form-field-flex {
+  padding: 2px 8px !important;
+}
+
+:host ::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
+  padding: 2px 0 !important;
+}
+
+:host ::ng-deep .mat-input-element {
+  padding: 0 !important;
+  line-height: 1.2 !important;
+  height: auto !important;
+  font-size: 0.9rem !important;
+}
+
+
+:host ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+  border-color: #ccc;
+}
+
+:host ::ng-deep .mat-form-field-appearance-outline.mat-focused
+  .mat-form-field-outline {
+  border-color: #3f51b5;
+}
+
+
+
+mat-error {
+  font-size: 0.75rem;
+  color: #d32f2f;
+}
+
+
+button[type="submit"] {
+  align-self: flex-end;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  background: #3f51b5;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: background 0.2s ease;
+}
+button[type="submit"]:disabled {
+  background: #aaa;
+  cursor: not-allowed;
+}
+button[type="submit"]:not(:disabled):hover {
+  background: #2c3e9b;
+}
+
+.film-form-card .form-header {
+  padding-bottom: 0.5rem;
+}
+
+
+.film-form-card .form-divider {
+  margin: 0.5rem 0;
+}
+
+.film-form-card .form-content {
+  padding-top: 0.5rem;
+}
+
+
+.roles-section {
+ 
+
+  h3 {
+    margin-top: 0.2rem;
+    margin-bottom: 0.5rem;
+    font-weight: 400;
+  }
+
+  .role-row {
+    
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+
+    mat-form-field {
+      margin-top: 0.3rem;
+      flex: 1;
+    }
+
+    button {
+      align-self: flex-end;
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  > button[type="button"] {
+    margin-top: 0.75rem;
+  }
+}

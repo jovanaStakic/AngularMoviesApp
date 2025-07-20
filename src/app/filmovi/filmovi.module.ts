@@ -14,10 +14,14 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatDividerModule} from '@angular/material/divider';
 import { MatIcon } from '@angular/material/icon';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { SearchFilmComponent } from './search-film/search-film.component';
+import { MatTableModule } from '@angular/material/table';
+
 
 @NgModule({
   declarations: [
-    CreateFilmComponent
+    CreateFilmComponent,
+    SearchFilmComponent
   ],
   imports: [
     CommonModule,
@@ -31,6 +35,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     MatDatepickerInput,
     MatHint,
     MatIcon,
+    MatTableModule,
     MatSelectModule,
     MatDatepickerModule,
     MatNativeDateModule,

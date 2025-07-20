@@ -1,6 +1,6 @@
 import { Injectable,inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';  
-import { LoginKorisnik, RegisterKorisnik } from '../model/app.model';
+import { LoginKorisnik, RegisterKorisnik, SuccessLogin } from '../model/app.model';
 import { environment } from '../enviroments/enviroment';
 import { BehaviorSubject, map, Observable, tap } from 'rxjs';
 
@@ -22,12 +22,16 @@ export class AuthService {
     return localStorage.getItem("jwt");
   }
 
-  public login(loginKorisnik:LoginKorisnik):Observable<string>{
+  public login(loginKorisnik:LoginKorisnik):Observable<SuccessLogin>{
     const url = `${this.apiUrl}/login`;
-    return this.httpClient.post<{ token: string }>(url,loginKorisnik).pipe( 
-      map(response => response.token),
-      tap(token=>{
-        localStorage.setItem("jwt",token)
+    return this.httpClient.post<SuccessLogin>(url,loginKorisnik).pipe( 
+      tap(response=>{
+        localStorage.setItem('jwt', response.token);
+          localStorage.setItem('user', JSON.stringify({
+            korisnickoIme: response.korisnickoIme,
+            ime: response.ime,
+            prezime: response.prezime
+          }));
         this.loggedIn$.next(true);
       }));
   }

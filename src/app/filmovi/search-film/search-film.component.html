@@ -1,0 +1,74 @@
+<mat-card>
+  
+  <mat-card-header class="form-header">
+    <mat-card-title>Pretrazi filmove</mat-card-title>
+  </mat-card-header>
+
+  <mat-divider class="form-divider"></mat-divider>
+
+   <mat-card-content class="form-content">
+  <form [formGroup]="searchForm">
+    <mat-form-field>
+      <mat-label>Naziv</mat-label>
+      <input matInput formControlName="naziv" placeholder="Unesite deo naziva">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Režiser</mat-label>
+      <mat-select formControlName="reziserId">
+        <mat-option [value]="null">Svi</mat-option>
+        <mat-option *ngFor="let r of reziseri" [value]="r.id">
+          {{ r.imePrezime }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Žanr</mat-label>
+      <mat-select formControlName="zanrId">
+        <mat-option [value]="null">Svi</mat-option>
+        <mat-option *ngFor="let z of zanrovi" [value]="z.id">
+          {{ z.naziv }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-button color="primary"  type="button" (click)="search()">
+      Pretraži
+    </button>
+  </form>
+  </mat-card-content>
+
+</mat-card>
+
+<mat-card #resultsCard>
+  <mat-card-header>
+    <mat-card-title>Rezultati: {{ dataSource.data.length }}</mat-card-title>
+  </mat-card-header>
+  <mat-divider></mat-divider>
+  <mat-card-content>
+    <table mat-table [dataSource]="dataSource" class="full-width">
+
+      
+      <ng-container matColumnDef="naziv">
+        <th mat-header-cell *matHeaderCellDef>Naziv</th>
+        <td mat-cell *matCellDef="let f">{{ f.naziv }}</td>
+      </ng-container>
+
+      
+      <ng-container matColumnDef="zanr">
+        <th mat-header-cell *matHeaderCellDef>Žanr</th>
+        <td mat-cell *matCellDef="let f">{{ f.zanr.naziv }}</td>
+      </ng-container>
+
+      
+      <ng-container matColumnDef="reziser">
+        <th mat-header-cell *matHeaderCellDef>Režiser</th>
+        <td mat-cell *matCellDef="let f">{{ f.reziser.imePrezime }}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row        *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </mat-card-content>
+</mat-card>

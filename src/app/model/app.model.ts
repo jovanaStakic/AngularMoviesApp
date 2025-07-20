@@ -40,3 +40,26 @@ export interface CreateFilm{
     reziserId:number;
     uloge:Array<Uloga>;
 }
+
+export interface Film{
+     naziv: string;
+    datumIzlaska:Date;
+    trajanjeFilma:number;
+    drzavaPorekla:string;
+    zanr:Zanr;
+    reziser:Reziser;
+    uloge:Array<Uloga>;
+}
+
+export interface SuccessLogin{
+    token:string;
+	korisnickoIme:string;
+	ime:string;
+	prezime:string;
+}
+
+export interface SearchFilm {
+  naziv?: string;
+  reziserId?: number;
+  zanrId?: number;
+}

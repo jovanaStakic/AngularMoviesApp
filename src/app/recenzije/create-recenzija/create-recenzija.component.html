@@ -1,0 +1,50 @@
+<mat-card class="film-form-card">
+   <mat-card-header class="form-header">
+    <mat-card-title>Dodaj novi film</mat-card-title>
+  </mat-card-header>
+
+  <mat-divider class="form-divider"></mat-divider>
+
+   <mat-card-content class="form-content">
+  <form [formGroup]="recenzijaForm" (ngSubmit)="saveRecenzija()">
+          <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Film</mat-label>
+        <input
+          matInput
+          [value]="selectedFilm?.naziv"
+          readonly
+          placeholder="Klikni za izbor filma"
+          (click)="openFilmSearch()"
+          aria-label="Izaberi film"
+        />
+        <button
+          mat-icon-button
+          matSuffix
+          *ngIf="selectedFilm"
+          aria-label="Očisti film"
+          (click)="clearFilm(); $event.stopPropagation()"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+        <mat-error *ngIf="recenzijaForm?.hasError('required') && recenzijaForm?.touched">
+          Film je obavezan.
+        </mat-error>
+        <mat-hint>Klikni da izabereš postojeći film</mat-hint>
+      </mat-form-field>
+
+    <mat-label>Ocena</mat-label>
+    <mat-radio-group formControlName="ocena" aria-label="Select an option">
+      <mat-radio-button *ngFor="let r of ratings" [value]="r">{{r}}</mat-radio-button>
+    </mat-radio-group>
+
+   <mat-form-field appearance="outline">
+      <mat-label>Utisak</mat-label>
+      <textarea matInput formControlName="utisak"  required></textarea>
+      <mat-error *ngIf="recenzijaForm.get('utisak')!.hasError('required') && recenzijaForm.get('utisak')!.touched">
+                    Utisak o filmu je obavezan.
+      </mat-error>
+    </mat-form-field>
+ <button mat-button color="primary"  type="submit" >Dodaj recenziju</button>
+  </form>
+  </mat-card-content>
+</mat-card>

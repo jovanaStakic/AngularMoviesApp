@@ -16,7 +16,7 @@ import { MatIcon } from '@angular/material/icon';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { SearchFilmComponent } from './search-film/search-film.component';
 import { MatTableModule } from '@angular/material/table';
-
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -40,7 +40,8 @@ import { MatTableModule } from '@angular/material/table';
     MatDatepickerModule,
     MatNativeDateModule,
     MatOption,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatDialogModule
   ],
   providers:[  {
     provide: NG_VALUE_ACCESSOR,

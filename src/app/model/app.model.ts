@@ -42,6 +42,7 @@ export interface CreateFilm{
 }
 
 export interface Film{
+    id?:number,
      naziv: string;
     datumIzlaska:Date;
     trajanjeFilma:number;
@@ -62,4 +63,10 @@ export interface SearchFilm {
   naziv?: string;
   reziserId?: number;
   zanrId?: number;
+}
+
+export interface CreateRecenzija{
+    filmId: number,
+    ocenaFilma: number,
+    utisak: string
 }

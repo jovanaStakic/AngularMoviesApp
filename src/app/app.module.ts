@@ -8,6 +8,7 @@ import { SharedModule } from './shared/shared.module';
 import { FilmoviModule } from './filmovi/filmovi.module';
 import { AuthModule } from './auth/auth.module';
 import { tokenInterceptor } from './interceptors/token.interceptor';
+import { RecenzijeModule } from './recenzije/recenzije.module';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { tokenInterceptor } from './interceptors/token.interceptor';
     AppRoutingModule,
     SharedModule,
     AuthModule,
-    FilmoviModule
+    FilmoviModule,
+    RecenzijeModule
   ],
   providers: [
     provideHttpClient(withInterceptors([tokenInterceptor]))

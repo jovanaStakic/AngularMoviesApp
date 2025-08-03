@@ -4,12 +4,14 @@ import { LoginComponent } from './auth/login/login.component';
 import { HomeComponent } from './home/home.component';
 import { CreateFilmComponent } from './filmovi/create-film/create-film.component';
 import { SearchFilmComponent } from './filmovi/search-film/search-film.component';
+import { CreateRecenzijaComponent } from './recenzije/create-recenzija/create-recenzija.component';
 
 const routes: Routes = [
   {path:'',component: LoginComponent},
   {path:'home',component: HomeComponent},
   {path: 'createFilm', component: CreateFilmComponent},
-  {path:'searchFilm',component:SearchFilmComponent}
+  {path:'searchFilm',component:SearchFilmComponent},
+  {path: 'createRecenzija', component:CreateRecenzijaComponent}
 ];
 
 @NgModule({

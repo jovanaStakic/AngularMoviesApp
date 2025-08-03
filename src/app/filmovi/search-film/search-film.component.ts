@@ -1,9 +1,10 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, Inject, Optional, ViewChild } from '@angular/core';
 import { Film, Reziser, SearchFilm, Zanr } from '../../model/app.model';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { FilmService } from '../film.service';
 import { Observable } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-search-film',
@@ -18,15 +19,19 @@ export class SearchFilmComponent {
   reziseri: Reziser[] = [];
   dataSource = new MatTableDataSource<Film>([]);
   displayedColumns = ['naziv', 'zanr', 'reziser'];
+  selectableFilm = false;
 
   @ViewChild('resultsCard', { static: false }) resultsCard!: ElementRef<HTMLElement>;
 
   constructor(
     private fb: FormBuilder,
-    private filmService: FilmService
+    private filmService: FilmService,
+    @Optional() private dialogRef: MatDialogRef<SearchFilmComponent>,
+    @Optional() @Inject(MAT_DIALOG_DATA) private data: any
   ) {}
 
   ngOnInit() {
+    this.selectableFilm = !!this.dialogRef;
     this.searchForm = this.fb.group({
       naziv: [''],
       reziserId: [null],
@@ -48,5 +53,17 @@ export class SearchFilmComponent {
           .scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
     });
+  }
+
+
+  select(film: Film) {
+    if (!this.selectableFilm) return;       
+    this.dialogRef!.close(film);        
+  }
+
+  close() {
+    if (this.selectableFilm) {
+      this.dialogRef!.close();
+    }
   }
 }

@@ -1,0 +1,60 @@
+<mat-card class="recenzije-card">
+  <mat-card-header>
+    <mat-card-title>Recenzije</mat-card-title>
+  </mat-card-header>
+  <mat-divider></mat-divider>
+
+  <mat-card-content>
+ <table mat-table [dataSource]="dataSource" class="full-width">
+    
+      <ng-container matColumnDef="film">
+        <th mat-header-cell *matHeaderCellDef>Film</th>
+        <td mat-cell *matCellDef="let r">{{ r.film?.naziv }}</td>
+      </ng-container>
+
+     
+      <ng-container matColumnDef="ocena">
+        <th mat-header-cell *matHeaderCellDef>Ocena</th>
+        <td mat-cell *matCellDef="let r">{{ r.ocenaFilma }}</td>
+      </ng-container>
+
+      
+      <ng-container matColumnDef="datum">
+        <th mat-header-cell *matHeaderCellDef>Datum</th>
+        <td mat-cell *matCellDef="let r">{{ r.datumKreiranja | date:'yyyy-MM-dd' }}</td>
+      </ng-container>
+
+     
+      <ng-container matColumnDef="utisak">
+        <th mat-header-cell *matHeaderCellDef>Utisak</th>
+        <td mat-cell *matCellDef="let r" [matTooltip]="r.utisak">
+          {{ truncate(r.utisak, 80) }}
+        </td>
+      </ng-container>
+
+      
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef class="actions-col">Akcije</th>
+        <td mat-cell *matCellDef="let r" class="actions-col">
+          <button mat-icon-button color="warn" (click)="confirmDelete(r)" aria-label="Obriši recenziju">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row        *matRowDef="let row; columns: displayedColumns"></tr>
+
+    </table>
+
+    <mat-paginator
+      [length]="dataSource.data.length || 0"
+      [pageSize]="10"
+      [pageSizeOptions]="[5,10,25,50]">
+    </mat-paginator>
+
+   
+    
+  </mat-card-content>
+  
+</mat-card>

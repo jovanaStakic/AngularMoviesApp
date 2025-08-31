@@ -1,0 +1,31 @@
+<h2 mat-dialog-title>Filmovi u listi {{ data.nazivListe }}:</h2>
+<mat-dialog-content class="dialog-content">
+
+  <table class="inner-table" *ngIf="(data.filmovi?.length || 0) > 0">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Naziv</th>
+        <th>Žanr</th>
+        <th>Režiser</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let f of data.filmovi; let i = index; trackBy: trackFilm">
+        <td>{{ i + 1 }}</td>
+        <td>{{ f.naziv }}</td>
+        <td>{{ f.zanr.naziv }}</td>
+        <td>{{ f.reziser.imePrezime }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="empty" *ngIf="!data.filmovi || data.filmovi.length === 0">
+    Ova lista nema filmove.
+  </div>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="close()">Zatvori</button>
+</mat-dialog-actions>

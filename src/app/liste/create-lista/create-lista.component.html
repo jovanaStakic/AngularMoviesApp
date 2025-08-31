@@ -1,0 +1,95 @@
+<mat-card class="lista-form-card">
+  <mat-card-header class="form-header">
+    <mat-card-title>Dodaj listu filmova</mat-card-title>
+
+    
+  </mat-card-header>
+
+  <mat-divider class="form-divider"></mat-divider>
+
+  <mat-card-content class="form-content">
+    <form [formGroup]="listaForm" (ngSubmit)="saveLista()">
+
+    
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Naziv liste</mat-label>
+        <input matInput formControlName="naziv" required />
+        <mat-error *ngIf="listaForm.get('naziv')?.hasError('required')">
+          Naziv je obavezan.
+        </mat-error>
+        <mat-error *ngIf="listaForm.get('naziv')?.hasError('minlength')">
+          Naziv mora imati najmanje 3 znaka.
+        </mat-error>
+      </mat-form-field>
+
+      
+      <div class="section-header">
+        <div>
+          <h3>Filmovi u listi</h3>
+        </div>
+
+        <div class="section-actions">
+          <button mat-stroked-button type="button" (click)="openFilmSearch()">
+            <mat-icon>add</mat-icon>
+            Dodaj film
+          </button>
+
+          <button mat-button color="warn" type="button"
+                  (click)="clearAll()"
+                  [disabled]="selectedData.data.length==0">
+            <mat-icon>clear_all</mat-icon>
+            Ukloni sve
+          </button>
+        </div>
+      </div>
+
+       <table mat-table [dataSource]="selectedData" class="app-table">
+
+      <ng-container matColumnDef="rb">
+        <th mat-header-cell *matHeaderCellDef>#</th>
+        <td mat-cell *matCellDef="let f; let i = index">{{ i + 1 }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="naziv">
+        <th mat-header-cell *matHeaderCellDef>Naziv</th>
+        <td mat-cell *matCellDef="let f">{{ f.naziv }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="zanr">
+        <th mat-header-cell *matHeaderCellDef>Žanr</th>
+        <td mat-cell *matCellDef="let f">{{ f.zanr?.naziv }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="reziser">
+        <th mat-header-cell *matHeaderCellDef>Režiser</th>
+        <td mat-cell *matCellDef="let f">{{ f.reziser?.imePrezime }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef class="actions-col">Akcije</th>
+        <td mat-cell *matCellDef="let f" class="actions-col">
+          <button mat-icon-button color="warn" (click)="removeFilm(f)" aria-label="Ukloni">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="selectedColumns"></tr>
+      <tr mat-row        *matRowDef="let row; columns: selectedColumns;"></tr>
+    </table>
+
+    <mat-paginator
+      [length]="selectedData.data.length || 0"
+      [pageSize]="10"
+      [pageSizeOptions]="[5,10,25,50]">
+    </mat-paginator>
+
+      <div class="empty" *ngIf="selectedData.data.length === 0">
+        Još nema filmova u listi. Klikni “Dodaj film”.
+      </div>
+    <div class="form-button">
+       <button mat-button color="primary"  type="submit" >Dodaj listu</button>
+       </div>
+    </form>
+  </mat-card-content>
+</mat-card>

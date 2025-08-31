@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CreateRecenzija, Film } from '../../model/app.model';
 import { MatDialog } from '@angular/material/dialog';
-import { SearchFilmComponent } from '../../filmovi/search-film/search-film.component';
+import { SearchFilmComponent } from '../../shared/search-film/search-film.component';
 import { RecenzijaService } from '../recenzija.service';
 
 @Component({

@@ -1,5 +1,6 @@
 import { forwardRef, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { SharedModule } from '../shared/shared.module';
 
 import { FilmoviRoutingModule } from './filmovi-routing.module';
 import {NG_VALUE_ACCESSOR, ReactiveFormsModule} from '@angular/forms';
@@ -14,7 +15,7 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatDividerModule} from '@angular/material/divider';
 import { MatIcon } from '@angular/material/icon';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
-import { SearchFilmComponent } from './search-film/search-film.component';
+import { SearchFilmComponent } from '../shared/search-film/search-film.component';
 import { MatTableModule } from '@angular/material/table';
 import {MatDialogModule} from '@angular/material/dialog';
 
@@ -26,6 +27,7 @@ import {MatDialogModule} from '@angular/material/dialog';
   imports: [
     CommonModule,
     FilmoviRoutingModule,
+    SharedModule,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,

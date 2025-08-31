@@ -2,23 +2,23 @@
     <div class="menu-container">
       <button mat-button [matMenuTriggerFor]="menuFilmovi">Filmovi</button>
       <mat-menu #menuFilmovi="matMenu">
-        <button mat-menu-item routerLink="/createFilm">Dodaj film</button>
-        <button mat-menu-item routerLink="/searchFilm">Pretrazi filmove</button>
+        <button mat-menu-item routerLink="/filmovi/create">Dodaj film</button>
+        <button mat-menu-item routerLink="/filmovi/search">Pretrazi filmove</button>
       </mat-menu>
   
       <button mat-button [matMenuTriggerFor]="menuRecenzije">Recenzije</button>
       <mat-menu #menuRecenzije="matMenu">
-        <button mat-menu-item routerLink="/createRecenzija">Dodaj recenziju</button>
-        <button mat-menu-item>Pretraži recenzije</button>
-        <button mat-menu-item>Obriši recenziju</button>
+        <button mat-menu-item routerLink="/recenzije/create">Dodaj recenziju</button>
+        <button mat-menu-item routerLink="/recenzije/list">Pogledaj recenzije</button>
+        
       </mat-menu>
   
       <button mat-button [matMenuTriggerFor]="menuListe">Liste</button>
       <mat-menu #menuListe="matMenu">
-        <button mat-menu-item>Dodaj listu</button>
-        <button mat-menu-item>Pretraži liste</button>
-        <button mat-menu-item>Izmeni listu</button>
-        <button mat-menu-item>Obriši listu</button>
+        <button mat-menu-item routerLink="/liste/create">Dodaj listu</button>
+        <button mat-menu-item routerLink="/liste/search">Pretraži liste</button>
+        <button mat-menu-item  routerLink="/liste/edit">Izmeni listu</button>
+        <button mat-menu-item routerLink="/liste/list">Obriši listu</button>
       </mat-menu>
     </div>
   

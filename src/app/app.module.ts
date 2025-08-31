@@ -9,11 +9,14 @@ import { FilmoviModule } from './filmovi/filmovi.module';
 import { AuthModule } from './auth/auth.module';
 import { tokenInterceptor } from './interceptors/token.interceptor';
 import { RecenzijeModule } from './recenzije/recenzije.module';
+import { ListeModule } from './liste/liste.module';
+
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    
+  
   ],
   imports: [
     BrowserModule,
@@ -21,7 +24,8 @@ import { RecenzijeModule } from './recenzije/recenzije.module';
     SharedModule,
     AuthModule,
     FilmoviModule,
-    RecenzijeModule
+    RecenzijeModule,
+    ListeModule
   ],
   providers: [
     provideHttpClient(withInterceptors([tokenInterceptor]))

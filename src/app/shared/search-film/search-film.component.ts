@@ -1,7 +1,7 @@
 import { Component, ElementRef, Inject, Optional, ViewChild } from '@angular/core';
 import { Film, Reziser, SearchFilm, Zanr } from '../../model/app.model';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { FilmService } from '../film.service';
+import { FilmService } from '../../filmovi/film.service';
 import { Observable } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';

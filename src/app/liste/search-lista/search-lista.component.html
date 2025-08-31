@@ -1,0 +1,108 @@
+<mat-card class="lista-search-card">
+  <mat-card-header class="form-header">
+    <mat-card-title>Pretraga lista</mat-card-title>
+  </mat-card-header>
+
+  <mat-divider class="form-divider"></mat-divider>
+
+  <mat-card-content class="form-content">
+    <form [formGroup]="searchForm" (ngSubmit)="search()" class="the-form">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Naziv liste</mat-label>
+        <input matInput formControlName="naziv" placeholder="Unesi deo naziva…" />
+        <mat-error *ngIf="searchForm.get('naziv')?.hasError('required')">
+          Naziv je obavezan.
+        </mat-error>
+        <mat-error *ngIf="searchForm.get('naziv')?.hasError('minlength')">
+          Unesi bar 2 znaka.
+        </mat-error>
+      </mat-form-field>
+
+      <div class="form-actions">
+        <button mat-stroked-button type="button" (click)="clear()">
+          <mat-icon>clear</mat-icon>
+          Očisti
+        </button>
+        <span class="spacer"></span>
+        <button mat-flat-button color="primary" type="submit" [disabled]="searchForm.invalid || loading">
+          Pretraži
+        </button>
+      </div>
+    </form>
+
+    <!-- Rezultati pretrage (liste) -->
+    <h3 class="section-title">Rezultati</h3>
+
+    <table mat-table [dataSource]="resultsDS" class="app-table">
+      <ng-container matColumnDef="naziv">
+        <th mat-header-cell *matHeaderCellDef>Naziv</th>
+        <td mat-cell *matCellDef="let l">{{ l.nazivListe }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="datum">
+        <th mat-header-cell *matHeaderCellDef>Datum</th>
+        <td mat-cell *matCellDef="let l">{{ l.datumKreiranja | date:'yyyy-MM-dd' }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="count">
+        <th mat-header-cell *matHeaderCellDef># filmova</th>
+        <td mat-cell *matCellDef="let l">{{ l.filmovi?.length || 0 }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef class="actions-col">Akcije</th>
+        <td mat-cell *matCellDef="let l" class="actions-col">
+          <button mat-button color="primary" (click)="select(l)">
+            Prikaži
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="listColumns"></tr>
+      <tr mat-row        *matRowDef="let row; columns: listColumns;" class="clickable"></tr>
+    </table>
+
+    <div class="empty" *ngIf="!loading && resultsDS.data.length === 0">
+      Nema rezultata. Pokušaj drugi naziv.
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<!-- Detalji izabrane liste: filmovi -->
+<mat-card class="films-card" *ngIf="selectedLista">
+  <mat-card-header class="form-header">
+    <mat-card-title>Filmovi u listi: {{ selectedLista.nazivListe }}</mat-card-title>
+  </mat-card-header>
+  <mat-divider class="form-divider"></mat-divider>
+
+  <mat-card-content class="form-content">
+    <table mat-table [dataSource]="filmsDS" class="app-table">
+      <ng-container matColumnDef="rb">
+        <th mat-header-cell *matHeaderCellDef>#</th>
+        <td mat-cell *matCellDef="let f; let i = index">{{ i + 1 }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="naziv">
+        <th mat-header-cell *matHeaderCellDef>Naziv</th>
+        <td mat-cell *matCellDef="let f">{{ f.naziv }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="zanr">
+        <th mat-header-cell *matHeaderCellDef>Žanr</th>
+        <td mat-cell *matCellDef="let f">{{ f.zanr?.naziv }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="reziser">
+        <th mat-header-cell *matHeaderCellDef>Režiser</th>
+        <td mat-cell *matCellDef="let f">{{ f.reziser?.imePrezime }}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="filmColumns"></tr>
+      <tr mat-row        *matRowDef="let row; columns: filmColumns;"></tr>
+    </table>
+
+    <div class="empty" *ngIf="filmsDS.data.length === 0">
+      Ova lista nema filmove.
+    </div>
+  </mat-card-content>
+</mat-card>

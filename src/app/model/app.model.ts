@@ -42,8 +42,8 @@ export interface CreateFilm{
 }
 
 export interface Film{
-    id?:number,
-     naziv: string;
+    id:number,
+    naziv: string;
     datumIzlaska:Date;
     trajanjeFilma:number;
     drzavaPorekla:string;
@@ -66,7 +66,41 @@ export interface SearchFilm {
 }
 
 export interface CreateRecenzija{
-    filmId: number,
-    ocenaFilma: number,
-    utisak: string
+    filmId: number;
+    ocenaFilma: number;
+    utisak: string;
 }
+
+export interface Recenzija{
+    id:number;
+    ocenaFilma:number;
+    utisak:string;
+    datumKreiranja:Date;
+    film:Film
+}
+
+export interface CreateLista{
+    id?:number;
+    nazivListe: string;
+    filmovi: number[];
+}
+
+export interface Lista {
+  id: number;
+  nazivListe: string;
+  datumKreiranja: Date;
+  filmovi: Film[];
+}
+
+export interface UpdateLista {
+  nazivListe: string;
+  filmovi: number[];
+}
+
+export interface ConfirmDialogData {
+  title?: string;
+  message: string;
+  confirmText?: string;
+  cancelText?: string;
+}
+

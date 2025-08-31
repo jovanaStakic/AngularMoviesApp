@@ -13,14 +13,23 @@ import {MatRadioModule} from '@angular/material/radio';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatIconModule} from '@angular/material/icon';
 
+import { SharedModule } from '../shared/shared.module';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import { MatTableModule } from '@angular/material/table';
+import { ListRecenzijaComponent } from './list-recenzija/list-recenzija.component';
+
+
 @NgModule({
   declarations: [
-    CreateRecenzijaComponent
+    CreateRecenzijaComponent,
+    ListRecenzijaComponent
   ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     RecenzijeRoutingModule,
+    SharedModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
@@ -29,7 +38,10 @@ import {MatIconModule} from '@angular/material/icon';
     MatSelectModule,
     MatRadioModule,
     MatDialogModule,
-    MatIconModule
+    MatIconModule,
+    MatPaginatorModule,
+    MatTooltipModule,
+    MatTableModule
   ]
 })
 export class RecenzijeModule { }

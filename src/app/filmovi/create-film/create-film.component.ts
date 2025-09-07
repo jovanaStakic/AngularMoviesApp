@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CreateFilm, Glumac, Reziser, Uloga, Zanr } from '../../model/app.model';
+import {
+  CreateFilm,
+  Glumac,
+  Reziser,
+  Uloga,
+  Zanr,
+} from '../../model/app.model';
 import { FilmService } from '../film.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -17,9 +23,11 @@ export class CreateFilmComponent implements OnInit {
   reziseri: Reziser[] = [];
   glumci: Glumac[] = [];
 
-  constructor(private fb: FormBuilder, private filmService: FilmService,private snackBar: MatSnackBar ) {
-    
-  }
+  constructor(
+    private fb: FormBuilder,
+    private filmService: FilmService,
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit(): void {
     this.maxDate = new Date();
@@ -27,16 +35,16 @@ export class CreateFilmComponent implements OnInit {
     this.buildForm();
   }
 
-  private prefillData(){
-    this.filmService.getZanrovi().subscribe(z=>{
-      this.zanrovi=z;
-    })
-     this.filmService.getReziseri().subscribe(r=>{
-      this.reziseri=r;
-    })
-     this.filmService.getGlumci().subscribe(g=>{
-      this.glumci=g;
-    })
+  private prefillData() {
+    this.filmService.getZanrovi().subscribe((z) => {
+      this.zanrovi = z;
+    });
+    this.filmService.getReziseri().subscribe((r) => {
+      this.reziseri = r;
+    });
+    this.filmService.getGlumci().subscribe((g) => {
+      this.glumci = g;
+    });
   }
 
   private buildForm(): void {
@@ -50,7 +58,6 @@ export class CreateFilmComponent implements OnInit {
       uloge: this.fb.array([], Validators.required),
     });
   }
-
 
   get ulogeArray(): FormArray {
     return this.filmForm.get('uloge') as FormArray;
@@ -74,62 +81,49 @@ export class CreateFilmComponent implements OnInit {
       this.filmForm.markAllAsTouched();
       return;
     }
-    
+
     this.filmService.saveFilm(this.populateFilmObject()).subscribe({
-      next: created => {
-      this.snackBar.open('🎬 Film je uspešno sačuvan!', 'Zatvori', {
+      next: (created) => {
+        this.snackBar.open('🎬 Film je uspešno sačuvan!', 'Zatvori', {
           duration: 3000,
           horizontalPosition: 'right',
-          verticalPosition: 'top'
+          verticalPosition: 'top',
         });
 
-      
         this.resetForm();
-      }
-      ,
-      error: err => {
+      },
+      error: (err) => {
         this.snackBar.open('❌ Greška pri čuvanju filma.', 'Zatvori', {
           duration: 3000,
-          panelClass: ['snack-error']
+          panelClass: ['snack-error'],
         });
         console.error(err);
-      }
- 
+      },
     });
-
-  
   }
 
-populateFilmObject() :CreateFilm{
-   const film: CreateFilm = {
+  populateFilmObject(): CreateFilm {
+    const film: CreateFilm = {
       naziv: this.filmForm.value.naziv,
-      datumIzlaska: this.filmForm.value.datumIzlaska,      
+      datumIzlaska: this.filmForm.value.datumIzlaska,
       trajanjeFilma: this.filmForm.value.trajanjeFilma,
       drzavaPorekla: this.filmForm.value.drzavaPorekla,
-      zanrId: this.filmForm.value.zanr,                   
-      reziserId: this.filmForm.value.reziser,             
+      zanrId: this.filmForm.value.zanr,
+      reziserId: this.filmForm.value.reziser,
 
-      
-      uloge: (this.filmForm.value.uloge as any[]).map(u => ({
+      uloge: (this.filmForm.value.uloge as any[]).map((u) => ({
         glumacId: u.glumacId,
-        nazivUloge: u.nazivUloge
-      })) as Uloga[]
-   };
+        nazivUloge: u.nazivUloge,
+      })) as Uloga[],
+    };
 
     return film;
-}
+  }
 
-resetForm(){
-    this.filmForm.reset({
-        naziv: '',
-        datumIzlaska: null,
-        trajanjeFilma: 1,     
-        drzavaPorekla: '',
-        zanr: null,
-        reziser: null
-      });
-      this.ulogeArray.clear();
-      this.filmForm.markAsPristine();
-      this.filmForm.markAsUntouched();
-}
+  resetForm() {
+    this.ulogeArray.clear();
+    this.filmForm.reset();
+    this.filmForm.markAsPristine();
+    this.filmForm.markAsUntouched();
+  }
 }

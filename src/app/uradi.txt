@@ -1,0 +1,5 @@
+Dodaj error i success poruke svuda
+Sredi formu za validaciju sto ne radi
+I skrol ne radi kako treba dole
+I pozadina login page
+I dashboard za home

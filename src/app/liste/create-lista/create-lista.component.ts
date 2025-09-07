@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { CreateLista, Film } from '../../model/app.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -12,10 +11,10 @@ import { MatTableDataSource } from '@angular/material/table';
   selector: 'app-create-lista',
   standalone: false,
   templateUrl: './create-lista.component.html',
-  styleUrl: './create-lista.component.scss'
+  styleUrl: './create-lista.component.scss',
 })
 export class CreateListaComponent {
-listaForm!: FormGroup;
+  listaForm!: FormGroup;
   selectedColumns = ['rb', 'naziv', 'zanr', 'reziser', 'actions'];
   selectedData = new MatTableDataSource<Film>([]);
 
@@ -28,7 +27,7 @@ listaForm!: FormGroup;
 
   ngOnInit(): void {
     this.listaForm = this.fb.group({
-      naziv: ['', [Validators.required, Validators.minLength(3)]]
+      naziv: ['', [Validators.required, Validators.minLength(3)]],
     });
   }
 
@@ -38,51 +37,53 @@ listaForm!: FormGroup;
       maxWidth: '1200px',
       height: '85vh',
       maxHeight: '85vh',
-      panelClass: 'wide-film-dialog'
+      panelClass: 'wide-film-dialog',
     });
 
     ref.afterClosed().subscribe((film: Film | undefined) => {
       if (!film) return;
 
-      if (this.selectedData.data.some(f => f.id === film.id)) {
+      if (this.selectedData.data.some((f) => f.id === film.id)) {
         this.snack.open('Taj film je već u listi.', 'OK', { duration: 2000 });
         return;
       }
-      
-      this.selectedData.data = [...this.selectedData.data, film];
 
-     
+      this.selectedData.data = [...this.selectedData.data, film];
     });
   }
 
   removeFilm(film: Film): void {
-    this.selectedData.data = this.selectedData.data.filter(x => x.id !== film.id);
+    this.selectedData.data = this.selectedData.data.filter(
+      (x) => x.id !== film.id
+    );
   }
 
   clearAll(): void {
     this.selectedData.data = [];
   }
 
-
   saveLista(): void {
     if (this.listaForm.invalid || this.selectedData.data.length === 0) {
       this.listaForm.markAllAsTouched();
-      this.snack.open('Popuni naziv i dodaj bar jedan film.', 'OK', { duration: 2500 });
+      this.snack.open('Popuni naziv i dodaj bar jedan film.', 'OK', {
+        duration: 2500,
+      });
       return;
     }
 
-    const lista:CreateLista = {
-     nazivListe: this.listaForm.value.naziv,
-     filmovi: this.selectedData.data.map(f => f.id)
+    const lista: CreateLista = {
+      nazivListe: this.listaForm.value.naziv,
+      filmovi: this.selectedData.data.map((f) => f.id),
     };
 
-     this.listaService.saveLista(lista).subscribe({
-     next: () => {
-       this.snack.open('Lista sačuvana.', 'OK', { duration: 2000 });
-         this.listaForm.reset();
+    this.listaService.saveLista(lista).subscribe({
+      next: () => {
+        this.snack.open('Lista sačuvana.', 'OK', { duration: 2000 });
+        this.listaForm.reset();
         this.selectedData.data = [];
       },
-     error: () => this.snack.open('Čuvanje nije uspelo.', 'Zatvori', { duration: 3000 })
-     });
+      error: () =>
+        this.snack.open('Čuvanje nije uspelo.', 'Zatvori', { duration: 3000 }),
+    });
   }
 }

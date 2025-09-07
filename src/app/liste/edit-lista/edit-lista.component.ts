@@ -12,10 +12,10 @@ import { ListaEditDialogComponent } from '../lista-edit-dialog/lista-edit-dialog
   selector: 'app-edit-lista',
   standalone: false,
   templateUrl: './edit-lista.component.html',
-  styleUrl: './edit-lista.component.scss'
+  styleUrl: './edit-lista.component.scss',
 })
 export class EditListaComponent {
- displayedColumns = ['naziv', 'datum', 'count', 'actions'];
+  displayedColumns = ['naziv', 'datum', 'count', 'actions'];
 
   dataSource = new MatTableDataSource<Lista>([]);
   loading = false;
@@ -29,14 +29,18 @@ export class EditListaComponent {
     private snack: MatSnackBar
   ) {}
 
-  ngOnInit(): void { this.load(); }
+  ngOnInit(): void {
+    this.load();
+  }
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
-    this.dataSource.sort      = this.sort;
+    this.dataSource.sort = this.sort;
 
     this.dataSource.filterPredicate = (row, filter) =>
-      (row.nazivListe || '').toLowerCase().includes(filter.trim().toLowerCase());
+      (row.nazivListe || '')
+        .toLowerCase()
+        .includes(filter.trim().toLowerCase());
   }
 
   load(): void {
@@ -48,8 +52,10 @@ export class EditListaComponent {
       },
       error: () => {
         this.loading = false;
-        this.snack.open('Greška pri učitavanju lista.', 'Zatvori', { duration: 3000 });
-      }
+        this.snack.open('Greška pri učitavanju lista.', 'Zatvori', {
+          duration: 3000,
+        });
+      },
     });
   }
 
@@ -59,19 +65,19 @@ export class EditListaComponent {
   }
 
   applyTableFilterValue(val: string): void {
-  this.dataSource.filter = (val || '').trim().toLowerCase();
-  this.paginator?.firstPage();
-}
+    this.dataSource.filter = (val || '').trim().toLowerCase();
+    this.paginator?.firstPage();
+  }
 
   openEdit(row: Lista) {
     const ref = this.dialog.open(ListaEditDialogComponent, {
       width: '900px',
       maxHeight: '90vh',
-      data: row 
+      data: row,
     });
 
     ref.afterClosed().subscribe((changed) => {
-      if (changed) this.load();  
+      if (changed) this.load();
     });
   }
 }

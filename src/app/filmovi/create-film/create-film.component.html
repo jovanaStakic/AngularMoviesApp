@@ -32,7 +32,7 @@
 
     <mat-form-field appearance="outline">
       <mat-label>Drzava porekla</mat-label>
-      <input matInput formControlName="drzavaPorekla"  required>
+      <input matInput formControlName="drzavaPorekla">
       <mat-error *ngIf="filmForm.get('drzavaPorekla')!.hasError('required') && filmForm.get('drzavaPorekla')!.touched">
                     Drzava porekla je obavezna.
       </mat-error>

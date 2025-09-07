@@ -27,18 +27,21 @@ export class CreateRecenzijaComponent implements OnInit {
   private buildForm(): void {
     this.recenzijaForm = this.fb.group({
       film: [null, Validators.required],
-      ocena: [null, [Validators.min(1), Validators.max(10), Validators.required]],
+      ocena: [
+        null,
+        [Validators.min(1), Validators.max(10), Validators.required],
+      ],
       utisak: ['', [Validators.required]],
     });
   }
 
   openFilmSearch() {
-    const dialogRef = this.dialog.open(SearchFilmComponent,{
-       width: '90vw',   
-    maxWidth: '1200px',   
-    height: '85vh',      
-    maxHeight: '85vh',
-    panelClass: 'wide-film-dialog'
+    const dialogRef = this.dialog.open(SearchFilmComponent, {
+      width: '90vw',
+      maxWidth: '1200px',
+      height: '85vh',
+      maxHeight: '85vh',
+      panelClass: 'wide-film-dialog',
     });
     dialogRef.afterClosed().subscribe((film: Film) => {
       if (film) {

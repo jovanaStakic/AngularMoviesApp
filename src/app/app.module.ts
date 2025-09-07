@@ -22,10 +22,7 @@ import { ListeModule } from './liste/liste.module';
     BrowserModule,
     AppRoutingModule,
     SharedModule,
-    AuthModule,
-    FilmoviModule,
-    RecenzijeModule,
-    ListeModule
+    AuthModule
   ],
   providers: [
     provideHttpClient(withInterceptors([tokenInterceptor]))

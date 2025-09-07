@@ -1,16 +1,12 @@
 <mat-card class="lista-form-card">
   <mat-card-header class="form-header">
     <mat-card-title>Dodaj listu filmova</mat-card-title>
-
-    
   </mat-card-header>
 
   <mat-divider class="form-divider"></mat-divider>
 
   <mat-card-content class="form-content">
     <form [formGroup]="listaForm" (ngSubmit)="saveLista()">
-
-    
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Naziv liste</mat-label>
         <input matInput formControlName="naziv" required />
@@ -21,19 +17,15 @@
           Naziv mora imati najmanje 3 znaka.
         </mat-error>
       </mat-form-field>
-
-      
       <div class="section-header">
         <div>
           <h3>Filmovi u listi</h3>
         </div>
-
         <div class="section-actions">
           <button mat-stroked-button type="button" (click)="openFilmSearch()">
             <mat-icon>add</mat-icon>
             Dodaj film
           </button>
-
           <button mat-button color="warn" type="button"
                   (click)="clearAll()"
                   [disabled]="selectedData.data.length==0">
@@ -43,7 +35,7 @@
         </div>
       </div>
 
-       <table mat-table [dataSource]="selectedData" class="app-table">
+      <table mat-table [dataSource]="selectedData" class="app-table">
 
       <ng-container matColumnDef="rb">
         <th mat-header-cell *matHeaderCellDef>#</th>
@@ -75,7 +67,7 @@
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="selectedColumns"></tr>
-      <tr mat-row        *matRowDef="let row; columns: selectedColumns;"></tr>
+      <tr mat-row *matRowDef="let row; columns: selectedColumns;"></tr>
     </table>
 
     <mat-paginator
@@ -83,12 +75,11 @@
       [pageSize]="10"
       [pageSizeOptions]="[5,10,25,50]">
     </mat-paginator>
-
-      <div class="empty" *ngIf="selectedData.data.length === 0">
-        Još nema filmova u listi. Klikni “Dodaj film”.
-      </div>
+    <div class="empty" *ngIf="selectedData.data.length === 0">
+      Još nema filmova u listi. Klikni “Dodaj film”.
+    </div>
     <div class="form-button">
-       <button mat-button color="primary"  type="submit" >Dodaj listu</button>
+       <button mat-button color="primary" type="submit" >Dodaj listu</button>
        </div>
     </form>
   </mat-card-content>

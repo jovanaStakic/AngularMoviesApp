@@ -30,6 +30,7 @@ export class AuthService {
     return this.httpClient.post<SuccessLogin>(url, loginKorisnik).pipe(
       tap((response) => {
         localStorage.setItem('jwt', response.token);
+        console.log(response);
         localStorage.setItem(
           'user',
           JSON.stringify({

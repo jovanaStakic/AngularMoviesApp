@@ -11,6 +11,7 @@ import { FilmService } from '../../filmovi/film.service';
 import { Observable } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-search-film',
@@ -27,18 +28,18 @@ export class SearchFilmComponent {
   displayedColumns = ['naziv', 'zanr', 'reziser'];
   selectableFilm = false;
 
-  @ViewChild('resultsCard', { static: false })
-  resultsCard!: ElementRef<HTMLElement>;
+  @ViewChild('resultsCard') resultsCard!: ElementRef;
 
   constructor(
     private fb: FormBuilder,
     private filmService: FilmService,
+    private snackBar:MatSnackBar,
     @Optional() private dialogRef: MatDialogRef<SearchFilmComponent>,
-    @Optional() @Inject(MAT_DIALOG_DATA) private data: any
+    @Optional() @Inject(MAT_DIALOG_DATA) private data: any,
   ) {}
 
   ngOnInit() {
-    this.selectableFilm = !!this.dialogRef;
+    this.selectableFilm = !this.dialogRef;
     this.searchForm = this.fb.group({
       naziv: [''],
       reziserId: [null],
@@ -51,13 +52,23 @@ export class SearchFilmComponent {
 
   search() {
     const criteria: SearchFilm = this.searchForm.value;
-    this.filmService.searchFilms(criteria).subscribe((films) => {
-      this.dataSource.data = films;
-
-      setTimeout(() => {
-        this.resultsCard.nativeElement
-          .scrollIntoView({ behavior: 'smooth', block: 'start' });
-      });
+    this.filmService.searchFilms(criteria).subscribe({
+      next: (films) => {
+        this.snackBar.open("Filmovi su pronadjeni.","OK",{ duration: 3000, panelClass: ['snack-success'],
+          horizontalPosition: 'right',
+          verticalPosition: 'top'});
+        this.dataSource.data = films;
+        setTimeout(() => {
+          this.resultsCard.nativeElement
+            .scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      },
+      error: () => {
+        this.snackBar.open('Neuspešna registracija.',"Zatvori",
+          { duration: 3000, panelClass: ['snack-error'],
+          horizontalPosition: 'right',
+          verticalPosition: 'top'});
+      }
     });
   }
 

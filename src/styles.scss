@@ -2,3 +2,23 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: url('/assets/images/background.png') center / cover no-repeat;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.snack-success .mdc-snackbar__surface { 
+    background: #2e7d32 !important; 
+    color: #fff !important; 
+}
+
+.snack-error .mdc-snackbar__surface { 
+    background: #c62828 !important; 
+    color: #fff !important; 
+}
+

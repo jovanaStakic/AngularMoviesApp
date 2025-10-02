@@ -26,7 +26,7 @@ export class EditListaComponent {
   constructor(
     private listaService: ListaService,
     private dialog: MatDialog,
-    private snack: MatSnackBar
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -52,8 +52,11 @@ export class EditListaComponent {
       },
       error: () => {
         this.loading = false;
-        this.snack.open('Greška pri učitavanju lista.', 'Zatvori', {
+        this.snackBar.open('Greška prilikom učitavanju lista.', 'Zatvori', {
           duration: 3000,
+          panelClass: ['snack-erorr'],
+          horizontalPosition: 'right',
+          verticalPosition: 'top'
         });
       },
     });

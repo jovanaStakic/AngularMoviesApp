@@ -26,7 +26,7 @@ export class SearchListaComponent {
   constructor(
     private fb: FormBuilder,
     private listaService: ListaService,
-    private snack: MatSnackBar
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -47,13 +47,22 @@ export class SearchListaComponent {
 
     this.listaService.searchListe(naziv).subscribe({
       next: (liste) => {
+        this.snackBar.open(`Liste su uspešno pronadjene.`, 'OK', {
+            duration: 3000,
+            panelClass: ['snack-erorr'],
+            horizontalPosition: 'right',
+            verticalPosition: 'top',
+          });
         this.resultsDS.data = liste || [];
         this.loading = false;
       },
       error: () => {
         this.loading = false;
         this.resultsDS.data = [];
-        this.snack.open('Greška pri pretrazi lista.', 'Zatvori', { duration: 3000 });
+        this.snackBar.open('Greška prilikom pretrage lista.', 'Zatvori', { duration: 3000,
+          panelClass: ['snack-erorr'],
+          horizontalPosition: 'right',
+          verticalPosition: 'top'  });
       }
     });
   }

@@ -9,20 +9,23 @@ import { FilmoviModule } from './filmovi/filmovi.module';
 import { AuthModule } from './auth/auth.module';
 import { tokenInterceptor } from './interceptors/token.interceptor';
 import { RecenzijeModule } from './recenzije/recenzije.module';
-import { ListeModule } from './liste/liste.module';
 
+import { HomeComponent } from './home/home.component';
+import { MatCardModule } from '@angular/material/card';
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    HomeComponent
   
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     SharedModule,
-    AuthModule
+    AuthModule,
+    MatCardModule
   ],
   providers: [
     provideHttpClient(withInterceptors([tokenInterceptor]))

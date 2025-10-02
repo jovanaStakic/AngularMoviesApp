@@ -1,39 +1,43 @@
-<div class="login-container">
-    <mat-card class="login-card">
-        <h1 class="login-title">Registruj se</h1>
-        <form [formGroup]="registerForm">
-            <mat-form-field>
-                <mat-label>Ime</mat-label>
-                <input matInput formControlName="ime" placeholder="ime" required>
-                <mat-error *ngIf="registerForm.get('ime')!.hasError('required') && registerForm.get('ime')!.touched">
-                    me je obavezno
-                </mat-error>
-            </mat-form-field>
-            <mat-form-field>
-                <mat-label>Prezime</mat-label>
-                <input matInput formControlName="prezime" placeholder="Korisničko ime" required>
-                <mat-error *ngIf="registerForm.get('prezime')!.hasError('required') && 
-                    registerForm.get('prezime')!.touched">
-                    Prezime je obavezno
-                </mat-error>
-            </mat-form-field>
-            <mat-form-field>
-                <mat-label>Korisničko ime</mat-label>
-                <input matInput formControlName="korisnickoIme" placeholder="Korisničko ime" required>
-                <mat-error *ngIf="registerForm.get('korisnickoIme')!.hasError('required') &&
-                    registerForm.get('korisnickoIme')!.touched">
-                    Korisničko ime je obavezno
-                </mat-error>
-            </mat-form-field>
-            <mat-form-field>
-                <mat-label>Sifra</mat-label>
-                <input matInput formControlName="sifra" placeholder="Sifra" type="password" required>
-                <mat-error *ngIf="registerForm.get('sifra')!.hasError('required') &&
-                    registerForm.get('sifra')!.touched">
-                    Lozinka je obavezna
-                </mat-error>
-            </mat-form-field>
-            <button mat-raised-button color="primary" (click)="register()">Registruj se</button>
-        </form>
-    </mat-card>
+<div class="register-container">
+  <mat-card class="register-card">
+    <h1 class="register-title">Registruj se</h1>
+
+    <form class="register-form" [formGroup]="registerForm" (ngSubmit)="register()">
+      <mat-form-field>
+        <mat-label>Ime</mat-label>
+        <input matInput formControlName="ime" placeholder="Ime" required>
+        <mat-error *ngIf="registerForm.get('ime')!.hasError('required') && registerForm.get('ime')!.touched">
+          Ime je obavezno
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Prezime</mat-label>
+        <input matInput formControlName="prezime" placeholder="Prezime" required>
+        <mat-error *ngIf="registerForm.get('prezime')!.hasError('required') && registerForm.get('prezime')!.touched">
+          Prezime je obavezno
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Korisničko ime</mat-label>
+        <input matInput formControlName="korisnickoIme" placeholder="Korisničko ime" required>
+        <mat-error *ngIf="registerForm.get('korisnickoIme')!.hasError('required') && registerForm.get('korisnickoIme')!.touched">
+          Korisničko ime je obavezno
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Šifra</mat-label>
+        <input matInput formControlName="sifra" placeholder="Šifra" type="password" required>
+        <mat-error *ngIf="registerForm.get('sifra')!.hasError('required') && registerForm.get('sifra')!.touched">
+          Lozinka je obavezna
+        </mat-error>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" type="submit">Registruj se</button>
+    </form>
+
+    <a class="register-link" routerLink="/login">Već imaš nalog? Prijavi se.</a>
+  </mat-card>
 </div>

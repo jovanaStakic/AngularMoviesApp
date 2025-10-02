@@ -84,21 +84,23 @@ export class CreateFilmComponent implements OnInit {
 
     this.filmService.saveFilm(this.populateFilmObject()).subscribe({
       next: (created) => {
-        this.snackBar.open('🎬 Film je uspešno sačuvan!', 'Zatvori', {
+        this.snackBar.open(`Film ${created.naziv} je uspešno sačuvan!`, 'OK', {
           duration: 3000,
           horizontalPosition: 'right',
           verticalPosition: 'top',
+          panelClass: ['snack-success']
         });
 
         this.resetForm();
       },
-      error: (err) => {
-        this.snackBar.open('❌ Greška pri čuvanju filma.', 'Zatvori', {
+      error: () => {
+        this.snackBar.open('Greška pri čuvanju filma.', 'Zatvori', {
           duration: 3000,
+          horizontalPosition: 'right',
+          verticalPosition: 'top',
           panelClass: ['snack-error'],
         });
-        console.error(err);
-      },
+      }
     });
   }
 

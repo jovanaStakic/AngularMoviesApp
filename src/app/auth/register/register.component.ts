@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-register',
@@ -17,14 +18,23 @@ export class RegisterComponent {
     sifra: new FormControl(''),
   });
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router, private snackBar:MatSnackBar) {}
 
   register() {
     this.authService.register(this.registerForm.value).subscribe({
-      next: (response) => {
-        console.log(response);
+      next: () => {
+        this.snackBar.open("Uspešna registracija.","OK",
+          { duration: 3000, panelClass: ['snack-success'],
+          horizontalPosition: 'right',
+          verticalPosition: 'top'});
         this.router.navigate(['/home']);
       },
+      error:()=>{
+        this.snackBar.open('Neuspešna registracija.',"Zatvori",
+          { duration: 3000, panelClass: ['snack-error'],
+          horizontalPosition: 'right',
+          verticalPosition: 'top'});
+      }
     });
   }
 }

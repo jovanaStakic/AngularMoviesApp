@@ -4,6 +4,7 @@ import { CreateRecenzija, Film } from '../../model/app.model';
 import { MatDialog } from '@angular/material/dialog';
 import { SearchFilmComponent } from '../../shared/search-film/search-film.component';
 import { RecenzijaService } from '../recenzija.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-create-recenzija',
@@ -18,7 +19,8 @@ export class CreateRecenzijaComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private dialog: MatDialog,
-    private recenzijaService: RecenzijaService
+    private recenzijaService: RecenzijaService,
+    private snackBar: MatSnackBar
   ) {}
   ngOnInit(): void {
     this.buildForm();
@@ -63,8 +65,20 @@ export class CreateRecenzijaComponent implements OnInit {
     };
     this.recenzijaService.saveRecenzija(recenzija).subscribe({
       next: (created) => {
-        console.log('Sacuvano');
+         this.snackBar.open(`Uspešno kreirana recenzija za film id: ${created.filmId}`,"OK",
+          { duration: 3000, panelClass: ['snack-success'],
+          horizontalPosition: 'right',
+          verticalPosition: 'top'});
+     
       },
+      error: ()=>{
+        this.snackBar.open('Greška pri čuvanju recenzije.', 'Zatvori', {
+          duration: 3000,
+          horizontalPosition: 'right',
+          verticalPosition: 'top',
+          panelClass: ['snack-error'],
+        });
+      }
     });
   }
 }

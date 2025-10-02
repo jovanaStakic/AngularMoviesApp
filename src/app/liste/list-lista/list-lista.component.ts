@@ -17,8 +17,6 @@ export class ListListaComponent {
   displayedColumns = ['naziv', 'datum', 'count', 'detalji', 'actions'];
   dataSource = new MatTableDataSource<Lista>([]);
 
-
-
   constructor(
     private listaService: ListaService,
     private dialog: MatDialog,
@@ -30,14 +28,11 @@ export class ListListaComponent {
   }
 
   load(): void {
- 
     this.listaService.getAllListe().subscribe({
       next: (liste: Lista[]) => {
         this.dataSource.data = liste || [];
-        
       },
       error: () => {
-       
         this.snack.open('Greška pri učitavanju lista.', 'Zatvori', {
           duration: 3000,
         });
@@ -45,7 +40,6 @@ export class ListListaComponent {
     });
   }
 
-  
   confirmDelete(row: Lista): void {
     const ref = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',
@@ -61,14 +55,21 @@ export class ListListaComponent {
       if (!ok) return;
 
       this.listaService.deleteLista(row.id).subscribe({
-        next: () => {
-          this.snack.open('Lista obrisana.', 'OK', { duration: 2000 });
+        next: (deleted) => {
+          this.snack.open(`Lista uspešno obrisana.`, 'OK', {
+            duration: 3000,
+            panelClass: ['snack-erorr'],
+            horizontalPosition: 'right',
+            verticalPosition: 'top',
+          });
           this.load();
         },
         error: () => {
-         
           this.snack.open('Brisanje nije uspelo.', 'Zatvori', {
             duration: 3000,
+            panelClass: ['snack-erorr'],
+            horizontalPosition: 'right',
+            verticalPosition: 'top',
           });
         },
       });
@@ -76,11 +77,11 @@ export class ListListaComponent {
   }
 
   openDetails(row: Lista, ev?: MouseEvent) {
-  ev?.stopPropagation();
-  this.dialog.open(ListaDetailsDialogComponent, {
-    width: '720px',
-    maxHeight: '85vh',
-    data: row
-  });
-}
+    ev?.stopPropagation();
+    this.dialog.open(ListaDetailsDialogComponent, {
+      width: '720px',
+      maxHeight: '85vh',
+      data: row,
+    });
+  }
 }

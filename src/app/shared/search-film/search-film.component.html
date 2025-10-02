@@ -41,12 +41,13 @@
 
 </mat-card>
 
-<mat-card #resultsCard>
+<mat-card >
   <mat-card-header>
     <mat-card-title>Rezultati: {{ dataSource.data.length }}</mat-card-title>
   </mat-card-header>
   <mat-divider></mat-divider>
   <mat-card-content>
+    <div #resultsCard>
     <table mat-table [dataSource]="dataSource" class="full-width">
 
       
@@ -71,5 +72,6 @@
       <tr mat-row        *matRowDef="let row; columns: displayedColumns;" [class.clickable]="selectableFilm"
         (click)="select(row)"></tr>
     </table>
+    </div>
   </mat-card-content>
 </mat-card>

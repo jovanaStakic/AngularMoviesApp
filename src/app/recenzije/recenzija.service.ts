@@ -19,7 +19,7 @@ export class RecenzijaService {
     return this.httpClient.post<CreateRecenzija>(url, recenzija);
   }
 
-  public getRecenzije(): Observable<Recenzija[]> {
+  public getAllRecenzije(): Observable<Recenzija[]> {
     const url = `${this.apiUrl}/recenzije`;
     return this.httpClient.get<Recenzija[]>(url);
   }

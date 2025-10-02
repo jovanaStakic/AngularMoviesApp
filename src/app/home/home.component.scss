@@ -1,0 +1,93 @@
+.dashboard {
+  min-height: calc(100vh - 120px);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 2rem 1rem;
+}
+
+.dashboard-shell {
+  width: 100%;
+  max-width: 1100px;
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.06);
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+
+.welcome {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .5rem;
+  text-align: center;
+}
+
+.metrics {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  width: 100%;
+}
+
+.metric-card {
+  width: 300px;
+  min-height: 220px;
+  padding: 1.5rem 1.25rem;
+  border-radius: 14px;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.06);
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: .4rem;
+}
+
+.welcome-title {
+  display: inline-block;
+  padding: .28rem .7rem;
+  border-radius: 999px;
+  
+  color: #3f51b5;
+  font-size: .85rem;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.welcome-user {
+  font-size: clamp(1.5rem, 3.2vw, 2rem);
+  font-weight: 800;
+  line-height: 1.1;
+  color: #0f172a;
+}
+
+.metric-label {
+  font-size: .9rem;
+  letter-spacing: .03em;
+  color: #3f51b5;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.metric-value {
+  font-size: clamp(2.4rem, 6vw, 3.2rem);
+  font-weight: 800;
+  line-height: 1.05;
+  color: #0f172a;
+}
+
+.metric-sub {
+  font-size: .9rem;
+  color: #575b63;
+}
+
+

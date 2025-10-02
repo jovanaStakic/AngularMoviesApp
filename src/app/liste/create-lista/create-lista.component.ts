@@ -21,7 +21,7 @@ export class CreateListaComponent {
   constructor(
     private fb: FormBuilder,
     private dialog: MatDialog,
-    private snack: MatSnackBar,
+    private snackBar: MatSnackBar,
     private listaService: ListaService
   ) {}
 
@@ -44,7 +44,9 @@ export class CreateListaComponent {
       if (!film) return;
 
       if (this.selectedData.data.some((f) => f.id === film.id)) {
-        this.snack.open('Taj film je već u listi.', 'OK', { duration: 2000 });
+        this.snackBar.open('Taj film je već u listi.', 'OK', { duration: 2000 ,
+          horizontalPosition: 'right',
+          verticalPosition: 'top'});
         return;
       }
 
@@ -65,8 +67,10 @@ export class CreateListaComponent {
   saveLista(): void {
     if (this.listaForm.invalid || this.selectedData.data.length === 0) {
       this.listaForm.markAllAsTouched();
-      this.snack.open('Popuni naziv i dodaj bar jedan film.', 'OK', {
+      this.snackBar.open('Popuni naziv i dodaj bar jedan film.', 'OK', {
         duration: 2500,
+        horizontalPosition: 'right',
+          verticalPosition: 'top'
       });
       return;
     }
@@ -77,13 +81,25 @@ export class CreateListaComponent {
     };
 
     this.listaService.saveLista(lista).subscribe({
-      next: () => {
-        this.snack.open('Lista sačuvana.', 'OK', { duration: 2000 });
-        this.listaForm.reset();
+       next: (saved) => {
+       this.listaForm.reset();
         this.selectedData.data = [];
+         this.snackBar.open(`Uspešno kreirana lista: ${saved.nazivListe}`,"OK",
+          { duration: 3000, panelClass: ['snack-success'],
+          horizontalPosition: 'right',
+          verticalPosition: 'top'});
+     
       },
-      error: () =>
-        this.snack.open('Čuvanje nije uspelo.', 'Zatvori', { duration: 3000 }),
+      error: ()=>{
+        this.snackBar.open('Greška pri brisanju liste.', 'Zatvori', {
+          duration: 3000,
+          horizontalPosition: 'right',
+          verticalPosition: 'top',
+          panelClass: ['snack-error'],
+        });
+      }
+ 
+     
     });
   }
 }

@@ -1,12 +1,12 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component} from '@angular/core';
 import { Recenzija } from '../../model/app.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { RecenzijaService } from '../recenzija.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatPaginator } from '@angular/material/paginator';
+
 import { ConfirmDialogComponent } from '../../shared/dialog/confirm-dialog/confirm-dialog.component';
-import { MatSort } from '@angular/material/sort';
+
 
 @Component({
   selector: 'app-list-recenzija',
@@ -21,7 +21,7 @@ export class ListRecenzijaComponent {
   constructor(
     private recenzijaService: RecenzijaService,
     private dialog: MatDialog,
-    private snack: MatSnackBar
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -29,15 +29,18 @@ export class ListRecenzijaComponent {
   }
 
   load(): void {
-    this.recenzijaService.getRecenzije().subscribe({
-      next: (list) => {
-        this.dataSource.data = list;
+    this.recenzijaService.getAllRecenzije().subscribe({
+       next: (list) => {
+         this.dataSource.data = list;
       },
-      error: () => {
-        this.snack.open('Greška pri učitavanju recenzija.', 'Zatvori', {
+      error: ()=>{
+        this.snackBar.open('Greška pri dohvatanju recenzija.', 'Zatvori', {
           duration: 3000,
+          horizontalPosition: 'right',
+          verticalPosition: 'top',
+          panelClass: ['snack-error'],
         });
-      },
+      }
     });
   }
 
@@ -56,15 +59,23 @@ export class ListRecenzijaComponent {
       if (!ok) return;
 
       this.recenzijaService.deleteRecenzija(row.id).subscribe({
-        next: () => {
-          this.snack.open('Recenzija obrisana.', 'OK', { duration: 2000 });
-          this.load();
-        },
-        error: () => {
-          this.snack.open('Brisanje nije uspelo.', 'Zatvori', {
-            duration: 3000,
-          });
-        },
+      
+      next: (deleted) => {
+        this.load();
+         this.snackBar.open(`Uspešno kreirana recenzija za film id: ${deleted}`,"OK",
+          { duration: 3000, panelClass: ['snack-success'],
+          horizontalPosition: 'right',
+          verticalPosition: 'top'});
+     
+      },
+      error: ()=>{
+        this.snackBar.open('Greška pri brisanju recenzije.', 'Zatvori', {
+          duration: 3000,
+          horizontalPosition: 'right',
+          verticalPosition: 'top',
+          panelClass: ['snack-error'],
+        });
+      }
       });
     });
   }

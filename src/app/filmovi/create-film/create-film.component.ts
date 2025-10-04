@@ -1,5 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import {
+  FormArray,
+  FormBuilder,
+  FormGroup,
+  FormGroupDirective,
+  Validators,
+} from '@angular/forms';
 import {
   CreateFilm,
   Glumac,
@@ -17,6 +23,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrl: './create-film.component.scss',
 })
 export class CreateFilmComponent implements OnInit {
+  @ViewChild(FormGroupDirective) formGroupDirective!: FormGroupDirective;
   maxDate!: Date;
   filmForm!: FormGroup;
   zanrovi: Zanr[] = [];
@@ -31,11 +38,11 @@ export class CreateFilmComponent implements OnInit {
 
   ngOnInit(): void {
     this.maxDate = new Date();
-    this.prefillData();
+    this.prefillForm();
     this.buildForm();
   }
 
-  private prefillData() {
+  private prefillForm() {
     this.filmService.getZanrovi().subscribe((z) => {
       this.zanrovi = z;
     });
@@ -51,7 +58,7 @@ export class CreateFilmComponent implements OnInit {
     this.filmForm = this.fb.group({
       naziv: ['', [Validators.required, Validators.maxLength(255)]],
       datumIzlaska: [null, [Validators.required]],
-      trajanjeFilma: [0, [Validators.required, Validators.min(1)]],
+      trajanjeFilma: [null, [Validators.required, Validators.min(1)]],
       drzavaPorekla: ['', [Validators.required]],
       zanr: [null, [Validators.required]],
       reziser: [null, [Validators.required]],
@@ -78,17 +85,15 @@ export class CreateFilmComponent implements OnInit {
 
   saveFilm(): void {
     if (this.filmForm.invalid) {
-      this.filmForm.markAllAsTouched();
       return;
     }
-
     this.filmService.saveFilm(this.populateFilmObject()).subscribe({
       next: (created) => {
         this.snackBar.open(`Film ${created.naziv} je uspešno sačuvan!`, 'OK', {
           duration: 3000,
           horizontalPosition: 'right',
           verticalPosition: 'top',
-          panelClass: ['snack-success']
+          panelClass: ['snack-success'],
         });
 
         this.resetForm();
@@ -100,7 +105,7 @@ export class CreateFilmComponent implements OnInit {
           verticalPosition: 'top',
           panelClass: ['snack-error'],
         });
-      }
+      },
     });
   }
 
@@ -112,11 +117,7 @@ export class CreateFilmComponent implements OnInit {
       drzavaPorekla: this.filmForm.value.drzavaPorekla,
       zanrId: this.filmForm.value.zanr,
       reziserId: this.filmForm.value.reziser,
-
-      uloge: (this.filmForm.value.uloge as any[]).map((u) => ({
-        glumacId: u.glumacId,
-        nazivUloge: u.nazivUloge,
-      })) as Uloga[],
+      uloge: this.filmForm.value.uloge as Uloga[],
     };
 
     return film;
@@ -125,7 +126,8 @@ export class CreateFilmComponent implements OnInit {
   resetForm() {
     this.ulogeArray.clear();
     this.filmForm.reset();
-    this.filmForm.markAsPristine();
-    this.filmForm.markAsUntouched();
+    if (this.formGroupDirective) {
+      this.formGroupDirective.resetForm();
+    }
   }
 }

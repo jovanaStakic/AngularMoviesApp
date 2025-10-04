@@ -1,6 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Film, Lista } from '../../model/app.model';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormGroupDirective,
+  Validators,
+} from '@angular/forms';
 import { ListaService } from '../lista.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
@@ -9,17 +14,19 @@ import { MatTableDataSource } from '@angular/material/table';
   selector: 'app-search-lista',
   standalone: false,
   templateUrl: './search-lista.component.html',
-  styleUrl: './search-lista.component.scss'
+  styleUrl: './search-lista.component.scss',
 })
 export class SearchListaComponent {
- searchForm!: FormGroup;
-  loading = false;
+  @ViewChild(FormGroupDirective) formGroupDirective!: FormGroupDirective;
+  @ViewChild('resultsCard') resultsCard!: ElementRef;
+  searchForm!: FormGroup;
+  
 
   listColumns = ['naziv', 'datum', 'count', 'actions'];
   filmColumns = ['rb', 'naziv', 'zanr', 'reziser'];
 
-  resultsDS = new MatTableDataSource<Lista>([]);
-  filmsDS   = new MatTableDataSource<Film>([]);
+  resultsData = new MatTableDataSource<Lista>([]);
+  filmsData = new MatTableDataSource<Film>([]);
 
   selectedLista: Lista | null = null;
 
@@ -31,7 +38,7 @@ export class SearchListaComponent {
 
   ngOnInit(): void {
     this.searchForm = this.fb.group({
-      naziv: ['', [Validators.required, Validators.minLength(2)]]
+      naziv: ['', [Validators.required, Validators.minLength(2)]],
     });
   }
 
@@ -41,41 +48,54 @@ export class SearchListaComponent {
       return;
     }
     const naziv = this.searchForm.value.naziv?.trim();
-    this.loading = true;
+   
     this.selectedLista = null;
-    this.filmsDS.data = [];
+    this.filmsData.data = [];
 
     this.listaService.searchListe(naziv).subscribe({
       next: (liste) => {
         this.snackBar.open(`Liste su uspešno pronadjene.`, 'OK', {
-            duration: 3000,
-            panelClass: ['snack-erorr'],
-            horizontalPosition: 'right',
-            verticalPosition: 'top',
-          });
-        this.resultsDS.data = liste || [];
-        this.loading = false;
-      },
-      error: () => {
-        this.loading = false;
-        this.resultsDS.data = [];
-        this.snackBar.open('Greška prilikom pretrage lista.', 'Zatvori', { duration: 3000,
+          duration: 3000,
           panelClass: ['snack-erorr'],
           horizontalPosition: 'right',
-          verticalPosition: 'top'  });
-      }
+          verticalPosition: 'top',
+        });
+        this.resultsData.data = liste || [];
+        
+        this.resetForm();
+      },
+      error: () => {
+        this.resultsData.data = [];
+        this.snackBar.open('Greška prilikom pretrage lista.', 'Zatvori', {
+          duration: 3000,
+          panelClass: ['snack-erorr'],
+          horizontalPosition: 'right',
+          verticalPosition: 'top',
+        });
+      },
     });
   }
 
   clear(): void {
-    this.searchForm.reset();
-    this.resultsDS.data = [];
+    this.resultsData.data = [];
     this.selectedLista = null;
-    this.filmsDS.data = [];
+    this.filmsData.data = [];
+    this.resetForm();
   }
 
   select(lista: Lista): void {
     this.selectedLista = lista;
-    this.filmsDS.data = lista.filmovi || [];
+    this.filmsData.data = lista.filmovi || [];
+    setTimeout(() => {
+          this.resultsCard.nativeElement
+            .scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+  }
+
+  resetForm() {
+    this.searchForm.reset();
+    if (this.formGroupDirective) {
+      this.formGroupDirective.resetForm();
+    }
   }
 }

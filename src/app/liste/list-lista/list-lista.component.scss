@@ -11,7 +11,7 @@
   margin: 0 auto 1.2rem;
   padding: 2rem;
   border-radius: 8px;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
   background: #fff;
 }
 
@@ -26,19 +26,27 @@
   font-weight: 600;
   text-align: left;
   padding: 8px;
-  color: rgba(0,0,0,.75);
-  border-bottom: 1px solid rgba(0,0,0,.08);
+  color: rgba(0, 0, 0, .75);
+  border-bottom: 1px solid rgba(0, 0, 0, .08);
 }
 
 .full-width td {
   padding: 8px;
-  border-bottom: 1px solid rgba(0,0,0,.06);
+  border-bottom: 1px solid rgba(0, 0, 0, .06);
 }
 
-.full-width tr:nth-child(even) td { background: rgba(0,0,0,.02); }
-.full-width tr:hover td { background: rgba(63,81,181,.04); }
+.full-width tr:nth-child(even) td {
+  background: rgba(0, 0, 0, .02);
+}
 
-.actions-col { width: 80px; text-align: center; }
+.full-width tr:hover td {
+  background: rgba(63, 81, 181, .04);
+}
+
+.actions-col {
+  width: 80px;
+  text-align: center;
+}
 
 
 .link-btn {
@@ -46,10 +54,13 @@
   padding: 0 4px;
   min-width: unset;
 }
-.link-btn:hover { text-decoration: none; }
+
+.link-btn:hover {
+  text-decoration: none;
+}
 
 .empty {
   text-align: center;
-  color: rgba(0,0,0,.6);
+  color: rgba(0, 0, 0, .6);
   padding: 12px 0;
 }

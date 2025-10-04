@@ -1,28 +1,30 @@
-<div class="dashboard">
-  <div class="dashboard-shell">
-    <header class="welcome">
-      <div class="welcome-title">Dobrodošli</div>
-      <div class="welcome-user">{{ fullName }}</div>
-    </header>
+<div class="home-container">
+  <div class="dashboard">
+    <div class="dashboard-shell">
+      <header class="welcome">
+        <div class="welcome-title">Dobrodošli</div>
+        <div class="welcome-user">{{ fullName }}</div>
+      </header>
 
-    <section class="metrics">
-      <mat-card class="metric-card">
-        <div class="metric-label">Broj filmova</div>
-        <div class="metric-value">{{ moviesNumber }}</div>
-        <div class="metric-sub">kreiranih filmova</div>
-      </mat-card>
+      <section class="metrics">
+        <mat-card class="metric-card">
+          <div class="metric-label">Broj filmova</div>
+          <div class="metric-value">{{ moviesNumber }}</div>
+          <div class="metric-sub">kreiranih filmova</div>
+        </mat-card>
 
-      <mat-card class="metric-card">
-        <div class="metric-label">Broj lista</div>
-        <div class="metric-value">{{ listsNumber }}</div>
-        <div class="metric-sub">kreiranih kolekcija</div>
-      </mat-card>
+        <mat-card class="metric-card">
+          <div class="metric-label">Broj lista</div>
+          <div class="metric-value">{{ listsNumber }}</div>
+          <div class="metric-sub">kreiranih kolekcija</div>
+        </mat-card>
 
-      <mat-card class="metric-card">
-        <div class="metric-label">Broj recenzija</div>
-        <div class="metric-value">{{ reviewNumber }}</div>
-        <div class="metric-sub">ukupno ocena/komentara</div>
-      </mat-card>
-    </section>
+        <mat-card class="metric-card">
+          <div class="metric-label">Broj recenzija</div>
+          <div class="metric-value">{{ reviewNumber }}</div>
+          <div class="metric-sub">ukupno ocena/komentara</div>
+        </mat-card>
+      </section>
+    </div>
   </div>
 </div>

@@ -6,14 +6,18 @@ import { Film, Lista } from '../../model/app.model';
   selector: 'app-lista-details-dialog',
   standalone: false,
   templateUrl: './lista-details-dialog.component.html',
-  styleUrl: './lista-details-dialog.component.scss'
+  styleUrl: './lista-details-dialog.component.scss',
 })
 export class ListaDetailsDialogComponent {
- constructor(
+  constructor(
     @Inject(MAT_DIALOG_DATA) public data: Lista,
     private ref: MatDialogRef<ListaDetailsDialogComponent>
   ) {}
 
-  trackFilm(_: number, f: Film) { return f.id; }
-  close() { this.ref.close(); }
+  trackFilm(_: number, f: Film) {
+    return f.id;
+  }
+  close() {
+    this.ref.close();
+  }
 }

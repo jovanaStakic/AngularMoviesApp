@@ -9,19 +9,35 @@
 .films-card {
   width: 100%;
   max-width: 1000px;
-  margin: 0 auto 1.2rem;
+  margin: 0 auto 1.5rem;
   padding: 2rem;
   border-radius: 8px;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
   background: #fff;
 }
 
-.form-header { display: flex; align-items: center; }
-.form-divider { margin: .5rem 0; }
-.form-content { padding-top: .5rem; }
+.form-header {
+  display: flex;
+  align-items: center;
+}
 
-.the-form { display: flex; flex-direction: column; gap: .5rem; }
-.full-width { width: 100%; }
+.form-divider {
+  margin: .5rem 0;
+}
+
+.form-content {
+  padding-top: .5rem;
+}
+
+.search-form {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
+
+.full-width {
+  width: 100%;
+}
 
 .form-actions {
   display: flex;
@@ -29,7 +45,10 @@
   gap: 8px;
   margin-top: .5rem;
 }
-.form-actions .spacer { flex: 1; }
+
+.form-actions .spacer {
+  flex: 1;
+}
 
 .section-title {
   margin: 10px 0 6px;
@@ -37,26 +56,47 @@
 }
 
 
-.app-table {
+.results-table {
   width: 100%;
   border-collapse: collapse;
   background: #ECF0F1;
 }
-.app-table th, .app-table td { padding: 8px; font-size: .9rem; }
-.app-table th {
-  font-weight: 600;
-  color: rgba(0,0,0,.75);
-  border-bottom: 1px solid rgba(0,0,0,.08);
-}
-.app-table td { border-bottom: 1px solid rgba(0,0,0,.06); }
-.app-table tr:nth-child(even) td { background: rgba(0,0,0,.02); }
-.app-table tr:hover td { background: rgba(63,81,181,.04); }
 
-.actions-col { width: 110px; text-align: right; }
-.clickable { cursor: pointer; }
+.results-table th,
+.results-table td {
+  padding: 8px;
+  font-size: .9rem;
+}
+
+.results-table th {
+  font-weight: 600;
+  color: rgba(0, 0, 0, .75);
+  border-bottom: 1px solid rgba(0, 0, 0, .08);
+}
+
+.results-table td {
+  border-bottom: 1px solid rgba(0, 0, 0, .06);
+}
+
+.results-table tr:nth-child(even) td {
+  background: rgba(0, 0, 0, .02);
+}
+
+.results-table tr:hover td {
+  background: rgba(63, 81, 181, .04);
+}
+
+.actions-col {
+  width: 110px;
+  text-align: right;
+}
+
+.clickable {
+  cursor: pointer;
+}
 
 .empty {
   text-align: center;
-  color: rgba(0,0,0,.6);
+  color: rgba(0, 0, 0, .6);
   padding: 12px 0;
 }

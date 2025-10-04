@@ -48,6 +48,8 @@ export class ListListaComponent {
         message: `Da li ste sigurni da želite da obrišete listu "${row.nazivListe}"?`,
         confirmText: 'Obriši',
         cancelText: 'Odustani',
+        panelClass: 'app-confirm-dialog',   
+  backdropClass: 'app-dialog-backdrop'
       },
     });
 
@@ -55,10 +57,10 @@ export class ListListaComponent {
       if (!ok) return;
 
       this.listaService.deleteLista(row.id).subscribe({
-        next: (deleted) => {
-          this.snack.open(`Lista uspešno obrisana.`, 'OK', {
+        next: () => {
+          this.snack.open(`Lista  uspešno obrisana.`, 'OK', {
             duration: 3000,
-            panelClass: ['snack-erorr'],
+            panelClass: ['snack-success'],
             horizontalPosition: 'right',
             verticalPosition: 'top',
           });

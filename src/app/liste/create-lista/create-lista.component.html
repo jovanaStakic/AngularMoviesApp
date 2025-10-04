@@ -10,10 +10,10 @@
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Naziv liste</mat-label>
         <input matInput formControlName="naziv" required />
-        <mat-error *ngIf="listaForm.get('naziv')?.hasError('required')">
+        <mat-error *ngIf="listaForm.get('naziv')?.hasError('required') && listaForm.get('naziv')!.touched">
           Naziv je obavezan.
         </mat-error>
-        <mat-error *ngIf="listaForm.get('naziv')?.hasError('minlength')">
+        <mat-error *ngIf="listaForm.get('naziv')?.hasError('minlength') && listaForm.get('naziv')!.touched">
           Naziv mora imati najmanje 3 znaka.
         </mat-error>
       </mat-form-field>
@@ -28,14 +28,14 @@
           </button>
           <button mat-button color="warn" type="button"
                   (click)="clearAll()"
-                  [disabled]="selectedData.data.length==0">
+                  [disabled]="selectedFilmovi.data.length==0">
             <mat-icon>clear_all</mat-icon>
             Ukloni sve
           </button>
         </div>
       </div>
 
-      <table mat-table [dataSource]="selectedData" class="app-table">
+      <table mat-table [dataSource]="selectedFilmovi" class="app-table">
 
       <ng-container matColumnDef="rb">
         <th mat-header-cell *matHeaderCellDef>#</th>
@@ -66,16 +66,16 @@
         </td>
       </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="selectedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: selectedColumns;"></tr>
+      <tr mat-header-row *matHeaderRowDef="selectedFilmoviColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: selectedFilmoviColumns;"></tr>
     </table>
 
     <mat-paginator
-      [length]="selectedData.data.length || 0"
+      [length]="selectedFilmovi.data.length || 0"
       [pageSize]="10"
       [pageSizeOptions]="[5,10,25,50]">
     </mat-paginator>
-    <div class="empty" *ngIf="selectedData.data.length === 0">
+    <div class="empty" *ngIf="selectedFilmovi.data.length === 0">
       Još nema filmova u listi. Klikni “Dodaj film”.
     </div>
     <div class="form-button">

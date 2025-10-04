@@ -39,7 +39,7 @@ export class SearchFilmComponent {
   ) {}
 
   ngOnInit() {
-    this.selectableFilm = !this.dialogRef;
+    this.selectableFilm = this.dialogRef!=null;
     this.searchForm = this.fb.group({
       naziv: [''],
       reziserId: [null],
@@ -64,7 +64,7 @@ export class SearchFilmComponent {
         });
       },
       error: () => {
-        this.snackBar.open('Neuspešna registracija.',"Zatvori",
+        this.snackBar.open('Greška prilikom pretrage filmova.',"Zatvori",
           { duration: 3000, panelClass: ['snack-error'],
           horizontalPosition: 'right',
           verticalPosition: 'top'});
@@ -73,8 +73,10 @@ export class SearchFilmComponent {
   }
 
   select(film: Film) {
-    if (!this.selectableFilm) return;
-    this.dialogRef!.close(film);
+    if (!this.selectableFilm) {
+      return;
+    }
+      this.dialogRef!.close(film);
   }
 
   close() {

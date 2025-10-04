@@ -3,14 +3,7 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background: url('/assets/images/background.png') center / cover no-repeat;
-  z-index: -1;
-  pointer-events: none;
-}
+
 
 .snack-success .mdc-snackbar__surface { 
     background: #2e7d32 !important; 
@@ -21,4 +14,19 @@ body::before {
     background: #c62828 !important; 
     color: #fff !important; 
 }
+
+
+.app-dialog-backdrop {
+  background: rgba(0,0,0,.35);
+}
+
+.app-confirm-dialog {
+  .mdc-dialog__surface{
+    border-radius: 8px;
+    box-shadow: 0 3px 10px rgba(0,0,0,.10);
+    background: #fff;
+    overflow: hidden; 
+  }
+}
+
 

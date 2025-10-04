@@ -23,7 +23,7 @@ export class ListaEditDialogComponent {
   filmsDS = new MatTableDataSource<Film>([]);
   displayedColumns = ['rb', 'naziv', 'zanr', 'reziser', 'actions'];
 
-  loading = false;
+  
   saving = false;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;

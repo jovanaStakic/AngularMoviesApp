@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { CreateRecenzija, Film } from '../../model/app.model';
 import { MatDialog } from '@angular/material/dialog';
 import { SearchFilmComponent } from '../../shared/search-film/search-film.component';
@@ -13,6 +13,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrl: './create-recenzija.component.scss',
 })
 export class CreateRecenzijaComponent implements OnInit {
+  @ViewChild(FormGroupDirective) formGroupDirective!: FormGroupDirective;
   recenzijaForm!: FormGroup;
   ratings: Number[] = [...Array(10)].map((_, i) => i + 1);
   selectedFilm!: Film | null;
@@ -69,7 +70,7 @@ export class CreateRecenzijaComponent implements OnInit {
           { duration: 3000, panelClass: ['snack-success'],
           horizontalPosition: 'right',
           verticalPosition: 'top'});
-     
+            this.resetForm();
       },
       error: ()=>{
         this.snackBar.open('Greška pri čuvanju recenzije.', 'Zatvori', {
@@ -80,5 +81,13 @@ export class CreateRecenzijaComponent implements OnInit {
         });
       }
     });
+  }
+
+  resetForm() {
+    this.selectedFilm=null;
+    this.recenzijaForm.reset();
+    if (this.formGroupDirective) {
+      this.formGroupDirective.resetForm();
+    }
   }
 }

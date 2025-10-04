@@ -14,9 +14,9 @@ type StoredUser = { korisnickoIme: string; ime?: string; prezime?: string };
 export class HomeComponent implements OnInit {
 
   fullName!:string;
-  moviesNumber!: Number;
-  reviewNumber!: Number;
-  listsNumber!: Number;
+  moviesNumber: Number=0;
+  reviewNumber: Number=0;
+  listsNumber: Number=0;
 
   constructor(
     private filmService: FilmService,

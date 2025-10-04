@@ -6,7 +6,7 @@
   <mat-divider class="form-divider"></mat-divider>
 
    <mat-card-content class="form-content">
-  <form [formGroup]="filmForm" (ngSubmit)="saveFilm()">
+  <form [formGroup]="filmForm" (ngSubmit)="saveFilm()"  >
     <mat-form-field appearance="outline">
       <mat-label>Naziv filma</mat-label>
       <input matInput formControlName="naziv"  required>

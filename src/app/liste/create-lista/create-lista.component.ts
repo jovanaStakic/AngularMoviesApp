@@ -1,6 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { CreateLista, Film } from '../../model/app.model';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormGroupDirective,
+  Validators,
+} from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { SearchFilmComponent } from '../../shared/search-film/search-film.component';
@@ -14,9 +19,10 @@ import { MatTableDataSource } from '@angular/material/table';
   styleUrl: './create-lista.component.scss',
 })
 export class CreateListaComponent {
+  @ViewChild(FormGroupDirective) formGroupDirective!: FormGroupDirective;
   listaForm!: FormGroup;
-  selectedColumns = ['rb', 'naziv', 'zanr', 'reziser', 'actions'];
-  selectedData = new MatTableDataSource<Film>([]);
+  selectedFilmoviColumns = ['rb', 'naziv', 'zanr', 'reziser', 'actions'];
+  selectedFilmovi = new MatTableDataSource<Film>([]);
 
   constructor(
     private fb: FormBuilder,
@@ -43,63 +49,77 @@ export class CreateListaComponent {
     ref.afterClosed().subscribe((film: Film | undefined) => {
       if (!film) return;
 
-      if (this.selectedData.data.some((f) => f.id === film.id)) {
-        this.snackBar.open('Taj film je već u listi.', 'OK', { duration: 2000 ,
+      if (this.selectedFilmovi.data.some((f) => f.id === film.id)) {
+        this.snackBar.open('Taj film je već u listi.', 'OK', {
+          duration: 3000,
           horizontalPosition: 'right',
-          verticalPosition: 'top'});
+          verticalPosition: 'top',
+          panelClass: ['snack-error'],
+        });
         return;
       }
 
-      this.selectedData.data = [...this.selectedData.data, film];
+      this.selectedFilmovi.data = [...this.selectedFilmovi.data, film];
     });
   }
 
   removeFilm(film: Film): void {
-    this.selectedData.data = this.selectedData.data.filter(
+    this.selectedFilmovi.data = this.selectedFilmovi.data.filter(
       (x) => x.id !== film.id
     );
   }
 
   clearAll(): void {
-    this.selectedData.data = [];
+    this.selectedFilmovi.data = [];
   }
 
   saveLista(): void {
-    if (this.listaForm.invalid || this.selectedData.data.length === 0) {
-      this.listaForm.markAllAsTouched();
-      this.snackBar.open('Popuni naziv i dodaj bar jedan film.', 'OK', {
-        duration: 2500,
+    if (this.listaForm.invalid || this.selectedFilmovi.data.length === 0) {
+      this.snackBar.open('Popuni naziv i/ili dodaj bar jedan film.', 'OK', {
+        duration: 3000,
         horizontalPosition: 'right',
-          verticalPosition: 'top'
+        verticalPosition: 'top',
+        panelClass: ['snack-error'],
       });
       return;
     }
 
     const lista: CreateLista = {
       nazivListe: this.listaForm.value.naziv,
-      filmovi: this.selectedData.data.map((f) => f.id),
+      filmovi: this.selectedFilmovi.data.map((f) => f.id),
     };
 
     this.listaService.saveLista(lista).subscribe({
-       next: (saved) => {
-       this.listaForm.reset();
-        this.selectedData.data = [];
-         this.snackBar.open(`Uspešno kreirana lista: ${saved.nazivListe}`,"OK",
-          { duration: 3000, panelClass: ['snack-success'],
-          horizontalPosition: 'right',
-          verticalPosition: 'top'});
-     
+      next: (saved) => {
+        this.selectedFilmovi.data = [];
+        this.snackBar.open(
+          `Uspešno kreirana lista: ${saved.nazivListe}`,
+          'OK',
+          {
+            duration: 3000,
+            panelClass: ['snack-success'],
+            horizontalPosition: 'right',
+            verticalPosition: 'top',
+          }
+        );
+        this.resetForm();
       },
-      error: ()=>{
+      error: () => {
         this.snackBar.open('Greška pri brisanju liste.', 'Zatvori', {
           duration: 3000,
           horizontalPosition: 'right',
           verticalPosition: 'top',
           panelClass: ['snack-error'],
         });
-      }
- 
-     
+      },
     });
+  }
+
+  resetForm() {
+    this.selectedFilmovi.data = [];
+    this.listaForm.reset();
+    if (this.formGroupDirective) {
+      this.formGroupDirective.resetForm();
+    }
   }
 }

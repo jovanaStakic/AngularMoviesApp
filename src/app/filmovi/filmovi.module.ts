@@ -9,21 +9,21 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { CreateFilmComponent } from './create-film/create-film.component';
 import { MatDatepickerInput, MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule, MatOption } from '@angular/material/core';
+import { MatNativeDateModule, MatOption, MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDividerModule } from '@angular/material/divider';
-import { MatIcon } from '@angular/material/icon';
+import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { SearchFilmComponent } from '../shared/search-film/search-film.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
-  declarations: [CreateFilmComponent, SearchFilmComponent],
+  declarations: [CreateFilmComponent],
   imports: [
     CommonModule,
-    FilmoviRoutingModule,
     SharedModule,
+    FilmoviRoutingModule,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
@@ -31,22 +31,17 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatCardModule,
     MatDividerModule,
     MatDatepickerInput,
-    MatHint,
-    MatIcon,
+    MatIconModule,
     MatTableModule,
     MatSelectModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatOption,
+    MatOptionModule,
     MatSnackBarModule,
     MatDialogModule,
   ],
   providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => CreateFilmComponent),
-      multi: true,
-    },
+    
   ],
 })
 export class FilmoviModule {}

@@ -12,6 +12,10 @@ import { Observable } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { SelectionModel } from '@angular/cdk/collections';
+
+type Mode = 'none' | 'single' | 'multi';
+type DialogData = { mode?: Mode };
 
 @Component({
   selector: 'app-search-film',
@@ -20,11 +24,13 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrl: './search-film.component.scss',
 })
 export class SearchFilmComponent {
+  mode:Mode="none";
   searchForm!: FormGroup;
   results$!: Observable<Film[]>;
   zanrovi: Zanr[] = [];
   reziseri: Reziser[] = [];
   dataSource = new MatTableDataSource<Film>([]);
+  selection = new SelectionModel<Film>;
   displayedColumns = ['naziv', 'zanr', 'reziser'];
   selectableFilm = false;
 
@@ -33,13 +39,19 @@ export class SearchFilmComponent {
   constructor(
     private fb: FormBuilder,
     private filmService: FilmService,
-    private snackBar:MatSnackBar,
-    @Optional() private dialogRef: MatDialogRef<SearchFilmComponent>,
-    @Optional() @Inject(MAT_DIALOG_DATA) private data: any,
+    private snackBar: MatSnackBar,
+    @Optional() public dialogRef: MatDialogRef<SearchFilmComponent>,
+    @Optional() @Inject(MAT_DIALOG_DATA) private data: any
   ) {}
 
   ngOnInit() {
-    this.selectableFilm = this.dialogRef!=null;
+    this.selectableFilm = this.dialogRef != null;
+    if (this.dialogRef) {
+      this.mode = this.data?.mode ?? 'single'; 
+        this.selection = new SelectionModel<Film>(true, []);
+      }
+    
+  
     this.searchForm = this.fb.group({
       naziv: [''],
       reziserId: [null],
@@ -50,33 +62,54 @@ export class SearchFilmComponent {
     this.filmService.getReziseri().subscribe((r) => (this.reziseri = r));
   }
 
+  get cols(): string[] {
+  return this.mode != 'none'
+    ? ['select', ...this.displayedColumns]
+    : this.displayedColumns;
+}
+
   search() {
     const criteria: SearchFilm = this.searchForm.value;
     this.filmService.searchFilms(criteria).subscribe({
       next: (films) => {
-        this.snackBar.open("Filmovi su pronadjeni.","OK",{ duration: 3000, panelClass: ['snack-success'],
+        this.snackBar.open('Filmovi su pronadjeni.', 'OK', {
+          duration: 3000,
+          panelClass: ['snack-success'],
           horizontalPosition: 'right',
-          verticalPosition: 'top'});
+          verticalPosition: 'top',
+        });
+        this.selection.clear(); 
         this.dataSource.data = films;
         setTimeout(() => {
-          this.resultsCard.nativeElement
-            .scrollIntoView({ behavior: 'smooth', block: 'start' });
+          this.resultsCard.nativeElement.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start',
+          });
         });
       },
       error: () => {
-        this.snackBar.open('Greška prilikom pretrage filmova.',"Zatvori",
-          { duration: 3000, panelClass: ['snack-error'],
+        this.snackBar.open('Greška prilikom pretrage filmova.', 'Zatvori', {
+          duration: 3000,
+          panelClass: ['snack-error'],
           horizontalPosition: 'right',
-          verticalPosition: 'top'});
-      }
+          verticalPosition: 'top',
+        });
+      },
     });
   }
 
-  select(film: Film) {
-    if (!this.selectableFilm) {
-      return;
-    }
+confirmSelection() {
+  if (!this.selectableFilm) return;
+  this.dialogRef!.close(this.selection.selected);
+}
+
+
+  toggleRow(film: Film) {
+    if (this.mode === 'multi') {
+      this.selection!.toggle(film);
+    }else{
       this.dialogRef!.close(film);
+}
   }
 
   close() {

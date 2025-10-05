@@ -20,12 +20,14 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatNativeDateModule, MatOptionModule } from '@angular/material/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [SearchFilmComponent,HeaderComponent, FooterComponent, ConfirmDialogComponent],
   imports: [
     CommonModule,
     MatMenuModule,
+    MatCheckboxModule,
     MatIconModule,
     MatToolbarModule,
     RouterModule,

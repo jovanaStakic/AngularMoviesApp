@@ -14,16 +14,11 @@
           formControlName="naziv"
           placeholder="Unesi deo naziva…"
         />
-        <mat-error *ngIf="searchForm.get('naziv')?.hasError('required')  && searchForm.get('naziv')!.touched">
-          Naziv je obavezan.
-        </mat-error>
-        <mat-error *ngIf="searchForm.get('naziv')?.hasError('minlength')  && searchForm.get('naziv')!.touched">
-          Unesi bar 2 znaka.
-        </mat-error>
+        
       </mat-form-field>
 
       <div class="form-actions">
-        <button mat-stroked-button type="button" (click)="clear()">
+        <button mat-stroked-button type="button" class="clearAll" (click)="clear()">
           <mat-icon>clear</mat-icon>
           Očisti
         </button>
@@ -32,7 +27,7 @@
           mat-flat-button
           color="primary"
           type="submit"
-          [disabled]="searchForm.invalid"
+          class="searchButton"
         >
           Pretraži
         </button>

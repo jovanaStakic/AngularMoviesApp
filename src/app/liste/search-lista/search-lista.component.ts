@@ -38,16 +38,12 @@ export class SearchListaComponent {
 
   ngOnInit(): void {
     this.searchForm = this.fb.group({
-      naziv: ['', [Validators.required, Validators.minLength(2)]],
+      naziv: ['', []],
     });
   }
 
   search(): void {
-    if (this.searchForm.invalid) {
-      this.searchForm.markAllAsTouched();
-      return;
-    }
-    const naziv = this.searchForm.value.naziv?.trim();
+    const naziv = this.searchForm.value.naziv;
    
     this.selectedLista = null;
     this.filmsData.data = [];
@@ -56,13 +52,11 @@ export class SearchListaComponent {
       next: (liste) => {
         this.snackBar.open(`Liste su uspešno pronadjene.`, 'OK', {
           duration: 3000,
-          panelClass: ['snack-erorr'],
+          panelClass: ['snack-success'],
           horizontalPosition: 'right',
           verticalPosition: 'top',
         });
         this.resultsData.data = liste || [];
-        
-        this.resetForm();
       },
       error: () => {
         this.resultsData.data = [];

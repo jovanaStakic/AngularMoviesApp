@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { Lista } from '../../model/app.model';
 import { MatDialog } from '@angular/material/dialog';
 import { ListaService } from '../lista.service';
@@ -14,7 +14,7 @@ import { ListaEditDialogComponent } from '../lista-edit-dialog/lista-edit-dialog
   templateUrl: './edit-lista.component.html',
   styleUrl: './edit-lista.component.scss',
 })
-export class EditListaComponent {
+export class EditListaComponent implements OnInit, AfterViewInit{
   displayedColumns = ['naziv', 'datum', 'count', 'actions'];
 
   dataSource = new MatTableDataSource<Lista>([]);

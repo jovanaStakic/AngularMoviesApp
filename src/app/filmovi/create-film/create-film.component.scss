@@ -123,3 +123,14 @@ button[type="submit"]:not(:disabled):hover {
     margin-top: 0.75rem;
   }
 }
+
+.roles-section .array-error {
+  margin: .25rem 0 .5rem;
+  font-size: 0.75rem;     
+  color: #d32f2f;         
+}
+.roles-section.invalid {
+  border: 1px solid rgba(211,47,47,.25);
+  border-radius: 6px;
+  padding: .5rem;
+}

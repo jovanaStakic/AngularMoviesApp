@@ -61,3 +61,65 @@
     width: 80px;
     text-align: right;
 }
+
+button[type="submit"] {
+  align-self: flex-end;
+  width: auto;
+  padding: 0.6rem 1.25rem;
+  font-size: 1rem;
+  background: #3f51b5;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: background 0.2s ease;
+}
+
+button[type="submit"]:disabled {
+  background: #aaa;
+  cursor: not-allowed;
+}
+
+button[type="submit"]:not(:disabled):hover {
+  background: #2c3e9b;
+}
+
+
+button[mat-stroked-button].addFilm {
+  --mdc-outlined-button-outline-color: #3f51b5;      
+  --mdc-outlined-button-label-text-color: #3f51b5;   
+  --mdc-outlined-button-outline-width: 1px;
+  --mdc-outlined-button-container-shape: 4px;
+  --mat-outlined-button-state-layer-color: #3f51b5;
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem; 
+}
+
+button[mat-stroked-button].addFilm mat-icon {
+  color: currentColor; 
+  font-size: 20px;    
+  line-height: 20px;
+}
+
+
+button[mat-button].clearAll {
+  --mdc-text-button-label-text-color: #3f51b5;
+  --mat-text-button-state-layer-color: #3f51b5;
+  color: #3f51b5;
+}
+
+
+button[mat-button].clearAll mat-icon {
+  color: currentColor;
+}
+
+button[mat-button].cancel {
+  --mdc-text-button-label-text-color: #3f51b5;
+  --mat-text-button-state-layer-color: #3f51b5;
+
+  color: #3f51b5;
+  text-transform: none;
+  border-radius: 4px;
+}
+

@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import { Recenzija } from '../../model/app.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { RecenzijaService } from '../recenzija.service';
@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { ConfirmDialogComponent } from '../../shared/dialog/confirm-dialog/confirm-dialog.component';
+import { MatPaginator } from '@angular/material/paginator';
 
 
 @Component({
@@ -14,7 +15,8 @@ import { ConfirmDialogComponent } from '../../shared/dialog/confirm-dialog/confi
   templateUrl: './list-recenzija.component.html',
   styleUrl: './list-recenzija.component.scss',
 })
-export class ListRecenzijaComponent {
+export class ListRecenzijaComponent implements OnInit, AfterViewInit{
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
   displayedColumns = ['film', 'ocena', 'utisak', 'datum', 'actions'];
   dataSource = new MatTableDataSource<Recenzija>([]);
 
@@ -26,6 +28,10 @@ export class ListRecenzijaComponent {
 
   ngOnInit(): void {
     this.load();
+  }
+
+  ngAfterViewInit(): void{
+    this.dataSource.paginator = this.paginator;
   }
 
   load(): void {

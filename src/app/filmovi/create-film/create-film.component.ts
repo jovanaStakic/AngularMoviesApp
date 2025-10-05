@@ -62,7 +62,7 @@ export class CreateFilmComponent implements OnInit {
       drzavaPorekla: ['', [Validators.required]],
       zanr: [null, [Validators.required]],
       reziser: [null, [Validators.required]],
-      uloge: this.fb.array([], Validators.required),
+      uloge: this.fb.array([], [Validators.minLength(1)]),
     });
   }
 
@@ -77,14 +77,28 @@ export class CreateFilmComponent implements OnInit {
         nazivUloge: ['', Validators.required],
       })
     );
+    this.ulogeArray.updateValueAndValidity();
   }
 
   removeUloga(index: number): void {
     this.ulogeArray.removeAt(index);
+    this.ulogeArray.markAsTouched();
+    this.ulogeArray.updateValueAndValidity();
   }
 
   saveFilm(): void {
     if (this.filmForm.invalid) {
+      return;
+    }
+      
+
+    if (this.ulogeArray.length === 0 || this.ulogeArray.hasError('minlength')) {
+      this.snackBar.open('Dodaj bar jednu ulogu pre čuvanja.', 'OK', {
+        duration: 3000,
+        horizontalPosition: 'right',
+        verticalPosition: 'top',
+        panelClass: ['snack-error'],
+      });
       return;
     }
     this.filmService.saveFilm(this.populateFilmObject()).subscribe({

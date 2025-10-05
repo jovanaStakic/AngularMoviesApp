@@ -45,6 +45,7 @@ export class CreateRecenzijaComponent implements OnInit {
       height: '85vh',
       maxHeight: '85vh',
       panelClass: 'wide-film-dialog',
+      data: { mode: 'single' }
     });
     dialogRef.afterClosed().subscribe((film: Film) => {
       if (film) {

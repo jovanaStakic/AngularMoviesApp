@@ -9,23 +9,23 @@
   </form>
 
   <div class="table-toolbar">
-    <button mat-stroked-button type="button" (click)="openFilmSearch()">
+    <button mat-stroked-button class="addFilm" type="button" (click)="openFilmSearch()">
       <mat-icon>add</mat-icon> Dodaj film
     </button>
     <button
       mat-button
-      color="warn"
+      class="clearAll"
       type="button"
       (click)="clearAll()"
-      [disabled]="filmsDS.data.length === 0"
+      [disabled]="filmsData.data.length === 0"
     >
       <mat-icon>clear_all</mat-icon> Ukloni sve
     </button>
     <span class="spacer"></span>
-    <div class="count">Ukupno: {{ filmsDS.data.length }}</div>
+    <div class="count">Ukupno: {{ filmsData.data.length }}</div>
   </div>
 
-  <table mat-table [dataSource]="filmsDS" class="inner-table">
+  <table mat-table [dataSource]="filmsData" class="inner-table">
     <ng-container matColumnDef="rb">
       <th mat-header-cell *matHeaderCellDef>#</th>
       <td mat-cell *matCellDef="let f; let i = index">{{ i + 1 }}</td>
@@ -65,7 +65,7 @@
   </table>
 
   <mat-paginator
-    [length]="filmsDS.data.length || 0"
+    [length]="filmsData.data.length || 0"
     [pageSize]="10"
     [pageSizeOptions]="[5, 10, 25, 50]"
   >
@@ -73,8 +73,8 @@
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-  <button mat-button (click)="close()">Otkaži</button>
-  <button mat-flat-button color="primary" (click)="save()" [disabled]="saving">
+  <button mat-button class="cancel" (click)="close()">Otkaži</button>
+  <button mat-flat-button type="submit" (click)="save()" [disabled]="saving">
     Sačuvaj
   </button>
 </mat-dialog-actions>

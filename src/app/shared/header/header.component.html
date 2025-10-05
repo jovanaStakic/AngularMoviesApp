@@ -1,5 +1,5 @@
 <mat-toolbar  class="toolbar">
-    <div class="menu-container">
+    <div class="menu-container" *ngIf="authService.loggedIn$ | async" >
       <button mat-button [matMenuTriggerFor]="menuFilmovi">Filmovi</button>
       <mat-menu #menuFilmovi="matMenu">
         <button mat-menu-item routerLink="/filmovi/create">Dodaj film</button>
@@ -26,7 +26,7 @@
       <a routerLink="home"><img src="assets/logo.png" alt="Logo" class="logo" /></a>
     </div>
 
-    <div class="sing-out-container">
+    <div *ngIf="authService.loggedIn$ | async" class="sing-out-container">
       <button class="sing-out-button" (click)="singOut()">Odjavi se</button>
       </div>
   </mat-toolbar>

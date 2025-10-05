@@ -44,22 +44,13 @@ export class CreateListaComponent {
       height: '85vh',
       maxHeight: '85vh',
       panelClass: 'wide-film-dialog',
+      data: { mode: 'multi' }
     });
 
-    ref.afterClosed().subscribe((film: Film | undefined) => {
-      if (!film) return;
+    ref.afterClosed().subscribe((filmovi: Film[] | undefined) => {
+      if (!filmovi) return;
 
-      if (this.selectedFilmovi.data.some((f) => f.id === film.id)) {
-        this.snackBar.open('Taj film je već u listi.', 'OK', {
-          duration: 3000,
-          horizontalPosition: 'right',
-          verticalPosition: 'top',
-          panelClass: ['snack-error'],
-        });
-        return;
-      }
-
-      this.selectedFilmovi.data = [...this.selectedFilmovi.data, film];
+      this.selectedFilmovi.data = [...this.selectedFilmovi.data,...filmovi];
     });
   }
 

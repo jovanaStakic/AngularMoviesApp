@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { ConfirmDialogComponent } from '../../shared/dialog/confirm-dialog/confirm-dialog.component';
 import { Film, Lista } from '../../model/app.model';
 import { ListaService } from '../lista.service';
@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { ListaDetailsDialogComponent } from '../lista-details-dialog/lista-details-dialog.component';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-list-lista',
@@ -13,7 +14,8 @@ import { ListaDetailsDialogComponent } from '../lista-details-dialog/lista-detai
   templateUrl: './list-lista.component.html',
   styleUrl: './list-lista.component.scss',
 })
-export class ListListaComponent {
+export class ListListaComponent implements OnInit, AfterViewInit {
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
   displayedColumns = ['naziv', 'datum', 'count', 'detalji', 'actions'];
   dataSource = new MatTableDataSource<Lista>([]);
 
@@ -25,6 +27,10 @@ export class ListListaComponent {
 
   ngOnInit(): void {
     this.load();
+  }
+
+  ngAfterViewInit(): void{
+    this.dataSource.paginator = this.paginator;
   }
 
   load(): void {

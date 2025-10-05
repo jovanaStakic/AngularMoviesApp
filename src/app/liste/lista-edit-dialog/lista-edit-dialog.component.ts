@@ -20,10 +20,9 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class ListaEditDialogComponent {
   form!: FormGroup;
-  filmsDS = new MatTableDataSource<Film>([]);
+  filmsData = new MatTableDataSource<Film>([]);
   displayedColumns = ['rb', 'naziv', 'zanr', 'reziser', 'actions'];
 
-  
   saving = false;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -45,11 +44,11 @@ export class ListaEditDialogComponent {
         [Validators.required, Validators.minLength(3)],
       ],
     });
-    this.filmsDS.data = [...(initial.filmovi || [])];
+    this.filmsData.data = [...(initial.filmovi || [])];
   }
 
   ngAfterViewInit(): void {
-    this.filmsDS.paginator = this.paginator;
+    this.filmsData.paginator = this.paginator;
   }
 
   openFilmSearch(): void {
@@ -62,22 +61,22 @@ export class ListaEditDialogComponent {
     });
     ref.afterClosed().subscribe((film: Film | undefined) => {
       if (!film) return;
-      if (this.filmsDS.data.some((f) => f.id === film.id)) {
+      if (this.filmsData.data.some((f) => f.id === film.id)) {
         this.snackBar.open('Taj film je već u listi.', 'OK', {
           duration: 2000,
         });
         return;
       }
-      this.filmsDS.data = [...this.filmsDS.data, film];
+      this.filmsData.data = [...this.filmsData.data, film];
       setTimeout(() => this.paginator?.lastPage());
     });
   }
 
   removeFilm(f: Film): void {
-    this.filmsDS.data = this.filmsDS.data.filter((x) => x.id !== f.id);
+    this.filmsData.data = this.filmsData.data.filter((x) => x.id !== f.id);
     if (
       this.paginator &&
-      this.filmsDS.data.length <=
+      this.filmsData.data.length <=
         this.paginator.pageIndex * this.paginator.pageSize
     ) {
       this.paginator.previousPage();
@@ -85,21 +84,24 @@ export class ListaEditDialogComponent {
   }
 
   clearAll(): void {
-    this.filmsDS.data = [];
+    this.filmsData.data = [];
   }
 
   save(): void {
-    if (this.form.invalid || this.filmsDS.data.length === 0) {
+    if (this.form.invalid || this.filmsData.data.length === 0) {
       this.form.markAllAsTouched();
       this.snackBar.open('Popuni naziv i dodaj bar jedan film.', 'OK', {
-        duration: 2500,
+        duration: 3000,
+        panelClass: ['snack-error'],
+        horizontalPosition: 'right',
+        verticalPosition: 'top',
       });
       return;
     }
 
     const payload: UpdateLista = {
       nazivListe: this.form.value.naziv,
-      filmovi: [...this.filmsDS.data].map((f) => f.id),
+      filmovi: [...this.filmsData.data].map((f) => f.id),
     };
 
     this.saving = true;
@@ -121,7 +123,7 @@ export class ListaEditDialogComponent {
           nazivListe: payload.nazivListe,
           datumKreiranja: this.data.datumKreiranja,
 
-          filmovi: this.filmsDS.data,
+          filmovi: this.filmsData.data,
         };
         this.ref.close(updated);
       },

@@ -56,7 +56,7 @@ export class SearchListaComponent {
           horizontalPosition: 'right',
           verticalPosition: 'top',
         });
-        this.resultsData.data = liste || [];
+        this.resultsData.data = liste ;
       },
       error: () => {
         this.resultsData.data = [];

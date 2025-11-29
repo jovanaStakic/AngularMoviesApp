@@ -9,6 +9,12 @@ export interface RegisterKorisnik{
     prezime: string;
 }
 
+export interface StoredKorisnik{ 
+    korisnickoIme: string; 
+    ime?: string; 
+    prezime?: string 
+}
+
 export interface Reziser{
     id: number;
     imePrezime: string;

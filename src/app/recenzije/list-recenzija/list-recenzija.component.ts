@@ -68,7 +68,7 @@ export class ListRecenzijaComponent implements OnInit, AfterViewInit{
       
       next: (deleted) => {
         this.load();
-         this.snackBar.open(`Uspešno kreirana recenzija za film id: ${deleted}`,"OK",
+         this.snackBar.open(`Uspešno obrisana recenzija.`,"OK",
           { duration: 3000, panelClass: ['snack-success'],
           horizontalPosition: 'right',
           verticalPosition: 'top'});
@@ -86,8 +86,10 @@ export class ListRecenzijaComponent implements OnInit, AfterViewInit{
     });
   }
 
-  truncate(s: string, n = 80): string {
-    if (!s) return '';
+  showOnlySnippet(s: string, n = 80): string {
+    if (!s){
+       return '';
+    }
     return s.length > n ? s.slice(0, n) + '…' : s;
   }
 }

@@ -9,7 +9,7 @@
     <form [formGroup]="recenzijaForm" (ngSubmit)="saveRecenzija()">
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Film</mat-label>
-        <input matInput [value]="selectedFilm?.naziv" readonly
+        <input matInput [value]="selectedFilm?.naziv" required
                placeholder="Klikni da izabereš postojeći film"
                (click)="openFilmSearch()" aria-label="Izaberi film" />
         <button mat-icon-button matSuffix *ngIf="selectedFilm"
@@ -24,8 +24,8 @@
       </mat-form-field>
       <div class="rating-section">
         <label class="section-label">Ocena</label>
-        <mat-radio-group formControlName="ocena" aria-label="Ocena">
-          <mat-radio-button *ngFor="let r of ratings" [value]="r">{{ r }}</mat-radio-button>
+        <mat-radio-group formControlName="ocena"  aria-label="Ocena">
+          <mat-radio-button *ngFor="let r of ratings" [value]="r" >{{ r }}</mat-radio-button>
         </mat-radio-group>
       </div>
       <mat-form-field appearance="outline" class="full-width">

@@ -15,7 +15,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { SelectionModel } from '@angular/cdk/collections';
 
 type Mode = 'none' | 'single' | 'multi';
-type DialogData = { mode?: Mode };
 
 @Component({
   selector: 'app-search-film',
@@ -72,7 +71,7 @@ export class SearchFilmComponent {
     const criteria: SearchFilm = this.searchForm.value;
     this.filmService.searchFilms(criteria).subscribe({
       next: (films) => {
-        this.snackBar.open('Filmovi su pronadjeni.', 'OK', {
+        this.snackBar.open('Filmovi su pronađeni.', 'OK', {
           duration: 3000,
           panelClass: ['snack-success'],
           horizontalPosition: 'right',
@@ -104,7 +103,7 @@ confirmSelection() {
 }
 
 
-  toggleRow(film: Film) {
+  selectRow(film: Film) {
     if (this.mode === 'multi') {
       this.selection!.toggle(film);
     }else{

@@ -11,13 +11,13 @@ import { Film, Lista } from '../../model/app.model';
 export class ListaDetailsDialogComponent {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: Lista,
-    private ref: MatDialogRef<ListaDetailsDialogComponent>
+    private refDialog: MatDialogRef<ListaDetailsDialogComponent>
   ) {}
 
   trackFilm(_: number, f: Film) {
     return f.id;
   }
   close() {
-    this.ref.close();
+    this.refDialog.close();
   }
 }

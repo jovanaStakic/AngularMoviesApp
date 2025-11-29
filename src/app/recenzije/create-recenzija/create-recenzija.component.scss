@@ -11,13 +11,21 @@
   max-width: 800px;
   padding: 2rem;
   border-radius: 8px;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
   background: #fff;
 }
 
-.form-header { padding-bottom: .5rem; }
-.form-divider { margin: .5rem 0; }
-.form-content { padding-top: .5rem; }
+.form-header {
+  padding-bottom: .5rem;
+}
+
+.form-divider {
+  margin: .5rem 0;
+}
+
+.form-content {
+  padding-top: .5rem;
+}
 
 
 form {
@@ -26,7 +34,9 @@ form {
   gap: .75rem;
 }
 
-.full-width { width: 100%; }
+.full-width {
+  width: 100%;
+}
 
 mat-form-field {
   width: 100%;
@@ -37,18 +47,22 @@ mat-form-field {
 :host ::ng-deep .mat-form-field-appearance-outline .mat-form-field-flex {
   padding: 2px 8px !important;
 }
+
 :host ::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
   padding: 2px 0 !important;
 }
+
 :host ::ng-deep .mat-input-element {
   padding: 0 !important;
   line-height: 1.2 !important;
   height: auto !important;
   font-size: .9rem !important;
 }
+
 :host ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
   border-color: #ccc;
 }
+
 :host ::ng-deep .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline {
   border-color: #3f51b5;
 }
@@ -62,7 +76,7 @@ mat-form-field {
 
 mat-radio-group {
   display: flex;
-  flex-wrap: wrap;       
+  flex-wrap: wrap;
   gap: 8px 14px;
 }
 
@@ -87,14 +101,15 @@ mat-error {
   background: #3f51b5;
   color: #fff;
   border-radius: 6px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
   transition: background .2s ease;
 }
+
 .actions-right button:disabled {
   background: #aaa;
   cursor: not-allowed;
 }
+
 .actions-right button:not(:disabled):hover {
   background: #2c3e9b;
 }
-

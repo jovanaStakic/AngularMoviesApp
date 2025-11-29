@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FilmService } from '../filmovi/film.service';
 import { ListaService } from '../liste/lista.service';
 import { RecenzijaService } from '../recenzije/recenzija.service';
-import { SearchFilm } from '../model/app.model';
+import { SearchFilm, StoredKorisnik} from '../model/app.model';
 
-type StoredUser = { korisnickoIme: string; ime?: string; prezime?: string };
+
 @Component({
   selector: 'app-home',
   standalone: false,
@@ -44,14 +44,17 @@ export class HomeComponent implements OnInit {
 
   private loadNameFromStorage() {
     const raw = localStorage.getItem('user');
-    if (!raw) { this.fullName = 'Korisnik'; return; }
+    if (!raw) { 
+      this.fullName = 'Korisnik'; 
+      return; 
+    }
 
     try {
-      const u = JSON.parse(raw) as StoredUser;
+      const u = JSON.parse(raw) as StoredKorisnik;
       const ime = (u.ime ?? '').trim();
       const prezime = (u.prezime ?? '').trim();
       console.log(raw);
-      this.fullName = (ime || prezime) ? `${ime} ${prezime}`.trim() : (u.korisnickoIme || 'Korisnik');
+      this.fullName = (ime && prezime) ? `${ime} ${prezime}`.trim() : (u.korisnickoIme || 'Korisnik');
     } catch {
       this.fullName = 'Korisnik';
     }

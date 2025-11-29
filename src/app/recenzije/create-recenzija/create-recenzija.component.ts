@@ -67,7 +67,7 @@ export class CreateRecenzijaComponent implements OnInit {
     };
     this.recenzijaService.saveRecenzija(recenzija).subscribe({
       next: (created) => {
-         this.snackBar.open(`Uspešno kreirana recenzija za film id: ${created.filmId}`,"OK",
+         this.snackBar.open(`Uspešno kreirana recenzija.`,"OK",
           { duration: 3000, panelClass: ['snack-success'],
           horizontalPosition: 'right',
           verticalPosition: 'top'});

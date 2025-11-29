@@ -14,7 +14,7 @@
           Naziv je obavezan.
         </mat-error>
         <mat-error *ngIf="listaForm.get('naziv')?.hasError('minlength') && listaForm.get('naziv')!.touched">
-          Naziv mora imati najmanje 3 znaka.
+          Naziv mora imati najmanje 3 karaktera.
         </mat-error>
       </mat-form-field>
       <div class="section-header">
@@ -35,7 +35,7 @@
         </div>
       </div>
 
-      <table mat-table [dataSource]="selectedFilmovi" class="app-table">
+      <table mat-table [dataSource]="selectedFilmovi" class="movies-table">
 
       <ng-container matColumnDef="rb">
         <th mat-header-cell *matHeaderCellDef>#</th>
@@ -71,7 +71,7 @@
     </table>
 
     <mat-paginator
-      [length]="selectedFilmovi.data.length || 0"
+      [length]="selectedFilmovi.data.length"
       [pageSize]="10"
       [pageSizeOptions]="[5,10,25,50]">
     </mat-paginator>

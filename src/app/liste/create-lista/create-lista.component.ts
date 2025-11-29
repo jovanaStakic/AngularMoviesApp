@@ -50,10 +50,47 @@ export class CreateListaComponent {
     ref.afterClosed().subscribe((filmovi: Film[] | undefined) => {
       if (!filmovi) return;
 
-      this.selectedFilmovi.data = [...this.selectedFilmovi.data,...filmovi];
+      this.addFilmsToList(filmovi);
     });
   }
 
+  private addFilmsToList(filmovi: Film[]): void {
+  const current = this.selectedFilmovi.data;
+  const existingIds = new Set(current.map(f => f.id));
+
+  const novi = filmovi.filter(f => !existingIds.has(f.id));
+  const duplikati = filmovi.filter(f => existingIds.has(f.id));
+
+  if (novi.length > 0) {
+    this.selectedFilmovi.data = [...current, ...novi];
+  }
+
+  if (duplikati.length > 0) {
+    if (duplikati.length === 1) {
+      this.snackBar.open(
+        `Film "${duplikati[0].naziv}" je već u listi i nije ponovo dodat.`,
+        'OK',
+        {
+          duration: 3000,
+          horizontalPosition: 'right',
+          verticalPosition: 'top',
+          panelClass: ['snack-error'],
+        }
+      );
+    } else {
+      this.snackBar.open(
+        `Neki od izabranih filmova su već u listi i nisu ponovo dodati.`,
+        'OK',
+        {
+          duration: 3000,
+          horizontalPosition: 'right',
+          verticalPosition: 'top',
+          panelClass: ['snack-error'],
+        }
+      );
+    }
+  }
+}
   removeFilm(film: Film): void {
     this.selectedFilmovi.data = this.selectedFilmovi.data.filter(
       (x) => x.id !== film.id
@@ -96,7 +133,7 @@ export class CreateListaComponent {
         this.resetForm();
       },
       error: () => {
-        this.snackBar.open('Greška pri brisanju liste.', 'Zatvori', {
+        this.snackBar.open('Greška prilikom brisanja liste.', 'Zatvori', {
           duration: 3000,
           horizontalPosition: 'right',
           verticalPosition: 'top',

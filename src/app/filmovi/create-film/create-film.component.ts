@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import {
   FormArray,
   FormBuilder,
+  FormControl,
   FormGroup,
   FormGroupDirective,
   Validators,
@@ -15,6 +16,7 @@ import {
 } from '../../model/app.model';
 import { FilmService } from '../film.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { startWith, Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-create-film',
@@ -22,13 +24,20 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   templateUrl: './create-film.component.html',
   styleUrl: './create-film.component.scss',
 })
-export class CreateFilmComponent implements OnInit {
+export class CreateFilmComponent implements OnInit,OnDestroy {
   @ViewChild(FormGroupDirective) formGroupDirective!: FormGroupDirective;
   maxDate!: Date;
   filmForm!: FormGroup;
   zanrovi: Zanr[] = [];
   reziseri: Reziser[] = [];
   glumci: Glumac[] = [];
+  reziserFilterControl = new FormControl<string | null>('');
+  glumacFilterControl = new FormControl<string | null>('');
+
+  filteredReziseri: Reziser[] = [];
+  filteredGlumci: Glumac[] = [];
+
+  private readonly _onDestroy = new Subject<void>();
 
   constructor(
     private fb: FormBuilder,
@@ -40,18 +49,55 @@ export class CreateFilmComponent implements OnInit {
     this.maxDate = new Date();
     this.prefillForm();
     this.buildForm();
+    this.initSelectFilters();
   }
 
   private prefillForm() {
     this.filmService.getZanrovi().subscribe((z) => {
       this.zanrovi = z;
+      
     });
     this.filmService.getReziseri().subscribe((r) => {
       this.reziseri = r;
+       this.filteredReziseri = r;
     });
     this.filmService.getGlumci().subscribe((g) => {
       this.glumci = g;
+      this.filteredGlumci = g;
     });
+  }
+
+  private initSelectFilters(): void {
+   this.reziserFilterControl.valueChanges
+      .pipe(startWith(''), takeUntil(this._onDestroy))
+      .subscribe((value) => {
+        const search = (value ?? '').toLowerCase();
+
+        if (!search) {
+          this.filteredReziseri = this.reziseri.slice();
+          return;
+        }
+
+        this.filteredReziseri = this.reziseri.filter((rez) =>
+          rez.imePrezime.toLowerCase().includes(search)
+        );
+      });
+
+    
+    this.glumacFilterControl.valueChanges
+      .pipe(startWith(''), takeUntil(this._onDestroy))
+      .subscribe((value) => {
+        const search = (value ?? '').toLowerCase();
+
+        if (!search) {
+          this.filteredGlumci = this.glumci.slice();
+          return;
+        }
+
+        this.filteredGlumci = this.glumci.filter((g) =>
+          g.imePrezime.toLowerCase().includes(search)
+        );
+      });
   }
 
   private buildForm(): void {
@@ -101,7 +147,7 @@ export class CreateFilmComponent implements OnInit {
       });
       return;
     }
-    this.filmService.saveFilm(this.populateFilmObject()).subscribe({
+    this.filmService.saveFilm(this.populateFilm()).subscribe({
       next: (created) => {
         this.snackBar.open(`Film ${created.naziv} je uspešno sačuvan!`, 'OK', {
           duration: 3000,
@@ -123,7 +169,7 @@ export class CreateFilmComponent implements OnInit {
     });
   }
 
-  populateFilmObject(): CreateFilm {
+  populateFilm(): CreateFilm {
     const film: CreateFilm = {
       naziv: this.filmForm.value.naziv,
       datumIzlaska: this.filmForm.value.datumIzlaska,
@@ -140,8 +186,15 @@ export class CreateFilmComponent implements OnInit {
   resetForm() {
     this.ulogeArray.clear();
     this.filmForm.reset();
+    this.reziserFilterControl.setValue('');
+    this.glumacFilterControl.setValue('');
     if (this.formGroupDirective) {
       this.formGroupDirective.resetForm();
     }
+  }
+
+  ngOnDestroy(): void {
+    this._onDestroy.next();
+    this._onDestroy.complete();
   }
 }

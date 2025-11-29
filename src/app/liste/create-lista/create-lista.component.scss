@@ -59,8 +59,6 @@
     gap: 8px;
 }
 
-
-
 .the-form {
   display: flex;
   flex-direction: column; 
@@ -139,9 +137,6 @@ button[type="submit"]:not(:disabled):hover {
     padding: 12px 0;
 }
 
-
-
-
 .film-text {
     flex: 1;
     min-width: 0;
@@ -184,7 +179,6 @@ button[mat-button].clearAll {
   --mat-text-button-state-layer-color: #3f51b5;
   color: #3f51b5;
 }
-
 
 button[mat-button].clearAll mat-icon {
   color: currentColor;

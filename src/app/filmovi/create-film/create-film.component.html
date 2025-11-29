@@ -1,69 +1,117 @@
 <mat-card class="film-form-card">
-   <mat-card-header class="form-header">
+  <mat-card-header class="form-header">
     <mat-card-title>Dodaj novi film</mat-card-title>
   </mat-card-header>
 
   <mat-divider class="form-divider"></mat-divider>
 
-   <mat-card-content class="form-content">
-  <form [formGroup]="filmForm" (ngSubmit)="saveFilm()"  >
-    <mat-form-field appearance="outline">
-      <mat-label>Naziv filma</mat-label>
-      <input matInput formControlName="naziv"  required>
-      <mat-error *ngIf="filmForm.get('naziv')!.hasError('required') && filmForm.get('naziv')!.touched">
-                    Naziv filma je obavezan.
-      </mat-error>
-    </mat-form-field>
+  <mat-card-content class="form-content">
+    <form [formGroup]="filmForm" (ngSubmit)="saveFilm()">
+      <mat-form-field appearance="outline">
+        <mat-label>Naziv filma</mat-label>
+        <input matInput formControlName="naziv" required />
+        <mat-error
+          *ngIf="
+            filmForm.get('naziv')!.hasError('required') &&
+            filmForm.get('naziv')!.touched
+          "
+        >
+          Naziv filma je obavezan.
+        </mat-error>
+      </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Datum izlaska</mat-label>
-        <input matInput formControlName="datumIzlaska" [matDatepicker]="picker" [max]="maxDate">
-        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-form-field appearance="outline">
+        <mat-label>Datum izlaska</mat-label>
+        <input
+          matInput
+          formControlName="datumIzlaska"
+          [matDatepicker]="picker"
+          [max]="maxDate"
+        />
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="picker"
+        ></mat-datepicker-toggle>
         <mat-datepicker startView="multi-year" #picker></mat-datepicker>
-    </mat-form-field>
-   
-   <mat-form-field appearance="outline">
-      <mat-label>Trajanje filma</mat-label>
-      <input matInput type="number" formControlName="trajanjeFilma" min="1" required>
-      <mat-error *ngIf="filmForm.get('trajanjeFilma')!.hasError('required') && filmForm.get('trajanjeFilma')!.touched">
-                    Unesite koliko film traje u minutima.
-      </mat-error>
-    </mat-form-field>
+      </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Drzava porekla</mat-label>
-      <input matInput formControlName="drzavaPorekla">
-      <mat-error *ngIf="filmForm.get('drzavaPorekla')!.hasError('required') && filmForm.get('drzavaPorekla')!.touched">
-                    Drzava porekla je obavezna.
-      </mat-error>
-    </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Trajanje filma</mat-label>
+        <input
+          matInput
+          type="number"
+          formControlName="trajanjeFilma"
+          min="1"
+          required
+        />
+        <mat-error
+          *ngIf="
+            filmForm.get('trajanjeFilma')!.hasError('required') &&
+            filmForm.get('trajanjeFilma')!.touched
+          "
+        >
+          Unesite koliko film traje u minutima.
+        </mat-error>
+      </mat-form-field>
 
-    <mat-form-field appearance="outline">
-     <mat-label>Zanr</mat-label>
-      <mat-select formControlName="zanr" name="zanrovi">
-        <mat-option *ngFor="let zanr of zanrovi" [value]="zanr.id">
-      {{ zanr.naziv }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Drzava porekla</mat-label>
+        <input matInput formControlName="drzavaPorekla" />
+        <mat-error
+          *ngIf="
+            filmForm.get('drzavaPorekla')!.hasError('required') &&
+            filmForm.get('drzavaPorekla')!.touched
+          "
+        >
+          Država porekla je obavezna.
+        </mat-error>
+      </mat-form-field>
 
-    <mat-form-field appearance="outline">
-     <mat-label>Reziser</mat-label>
-      <mat-select formControlName="reziser" name="reziseri">
-        <mat-option *ngFor="let reziser of reziseri" [value]="reziser.id">
-      {{ reziser.imePrezime }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Žanr</mat-label>
+        <mat-select formControlName="zanr" name="zanrovi">
+          <mat-option *ngFor="let zanr of zanrovi" [value]="zanr.id">
+            {{ zanr.naziv }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
 
-     <section class="roles-section" formArrayName="uloge">
+      <mat-form-field appearance="outline">
+        <mat-label>Režiser</mat-label>
+        <mat-select formControlName="reziser" name="reziseri">
+          <ngx-mat-select-search
+            [formControl]="reziserFilterControl"
+            placeholderLabel="Pretraži režisere..."
+            noEntriesFoundLabel="Nema rezultata"
+          ></ngx-mat-select-search>
+
+          <mat-option
+            *ngFor="let reziser of filteredReziseri"
+            [value]="reziser.id"
+          >
+            {{ reziser.imePrezime }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <section class="roles-section" formArrayName="uloge">
         <h3>Uloge</h3>
 
-        <div *ngFor="let u of ulogeArray.controls; let i = index" [formGroupName]="i" class="role-row">
+        <div
+          *ngFor="let u of ulogeArray.controls; let i = index"
+          [formGroupName]="i"
+          class="role-row"
+        >
           <mat-form-field appearance="outline">
             <mat-label>Glumac</mat-label>
             <mat-select formControlName="glumacId">
-              <mat-option *ngFor="let g of glumci" [value]="g.id">
+              <ngx-mat-select-search
+                [formControl]="glumacFilterControl"
+                placeholderLabel="Pretraži glumce..."
+                noEntriesFoundLabel="Nema rezultata"
+              ></ngx-mat-select-search>
+
+              <mat-option *ngFor="let g of filteredGlumci" [value]="g.id">
                 {{ g.imePrezime }}
               </mat-option>
             </mat-select>
@@ -71,10 +119,15 @@
 
           <mat-form-field appearance="outline">
             <mat-label>Naziv uloge</mat-label>
-            <input matInput formControlName="nazivUloge" >
+            <input matInput formControlName="nazivUloge" />
           </mat-form-field>
 
-          <button mat-icon-button color="warn" type="button" (click)="removeUloga(i)">
+          <button
+            mat-icon-button
+            color="warn"
+            type="button"
+            (click)="removeUloga(i)"
+          >
             <mat-icon>remove_circle</mat-icon>
           </button>
         </div>
@@ -83,11 +136,9 @@
           <mat-icon>add_circle</mat-icon>
           Dodaj ulogu
         </button>
-        
       </section>
 
- <button mat-button color="primary"  type="submit" >Dodaj film</button>
-  </form>
+      <button mat-button color="primary" type="submit">Dodaj film</button>
+    </form>
   </mat-card-content>
 </mat-card>
-

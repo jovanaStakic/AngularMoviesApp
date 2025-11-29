@@ -84,8 +84,8 @@ export class ListListaComponent implements OnInit, AfterViewInit {
     });
   }
 
-  openDetails(row: Lista, ev?: MouseEvent) {
-    ev?.stopPropagation();
+  openDetails(row: Lista) {
+    
     this.dialog.open(ListaDetailsDialogComponent, {
       width: '720px',
       maxHeight: '85vh',

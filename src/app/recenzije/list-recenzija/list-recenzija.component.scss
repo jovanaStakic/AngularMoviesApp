@@ -1,4 +1,3 @@
-
 :host {
   display: flex;
   flex-direction: column;
@@ -13,14 +12,22 @@
   margin: 0 auto 1.5rem;
   padding: 2rem;
   border-radius: 8px;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
   background: #fff;
 }
 
 
-.form-header { padding-bottom: .5rem; }
-.form-divider { margin: .5rem 0; }
-.form-content { padding-top: .5rem; }
+.form-header {
+  padding-bottom: .5rem;
+}
+
+.form-divider {
+  margin: .5rem 0;
+}
+
+.form-content {
+  padding-top: .5rem;
+}
 
 .full-width {
   width: 100%;
@@ -39,37 +46,39 @@
 .full-width th {
   font-weight: 600;
   text-align: left;
-  color: rgba(0,0,0,.75);
-  border-bottom: 1px solid rgba(0,0,0,.08);
+  color: rgba(0, 0, 0, .75);
+  border-bottom: 1px solid rgba(0, 0, 0, .08);
 }
 
 .full-width td {
-  border-bottom: 1px solid rgba(0,0,0,.06);
+  border-bottom: 1px solid rgba(0, 0, 0, .06);
 }
 
 .full-width tr:nth-child(even) td {
-  background: rgba(0,0,0,.02);
+  background: rgba(0, 0, 0, .02);
 }
+
 .full-width tr:hover td {
-  background: rgba(63,81,181,.04); /* #3f51b5 sa malom transparencijom */
+  background: rgba(63, 81, 181, .04);
 }
 
 
 .actions-col {
   width: 80px;
-  text-align: right;
+  text-align: left;
 }
 
 .actions-col button[mat-icon-button] {
   transition: transform .12s ease, opacity .12s ease;
 }
+
 .actions-col button[mat-icon-button]:hover {
   transform: scale(1.06);
   opacity: .9;
 }
 
 .mat-mdc-paginator {
-  border-top: 1px solid rgba(0,0,0,.06);
+  border-top: 1px solid rgba(0, 0, 0, .06);
   margin-top: 8px;
   padding-top: 8px;
 }
@@ -78,5 +87,3 @@
   max-width: 480px;
   white-space: pre-line;
 }
-
-

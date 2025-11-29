@@ -8,9 +8,12 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
 import { ConfirmDialogComponent } from './dialog/confirm-dialog/confirm-dialog.component';
-import {MatDialogModule} from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 import { SearchFilmComponent } from './search-film/search-film.component';
-import { MatDatepickerInput, MatDatepickerModule } from '@angular/material/datepicker';
+import {
+  MatDatepickerInput,
+  MatDatepickerModule,
+} from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatDividerModule } from '@angular/material/divider';
@@ -23,7 +26,12 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
-  declarations: [SearchFilmComponent,HeaderComponent, FooterComponent, ConfirmDialogComponent],
+  declarations: [
+    SearchFilmComponent,
+    HeaderComponent,
+    FooterComponent,
+    ConfirmDialogComponent,
+  ],
   imports: [
     CommonModule,
     MatMenuModule,
@@ -46,8 +54,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatNativeDateModule,
     MatOptionModule,
     MatSnackBarModule,
-    
   ],
-  exports: [HeaderComponent, FooterComponent,SearchFilmComponent],
+  exports: [HeaderComponent, FooterComponent, SearchFilmComponent],
 })
 export class SharedModule {}

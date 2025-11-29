@@ -18,7 +18,6 @@ export class EditListaComponent implements OnInit, AfterViewInit{
   displayedColumns = ['naziv', 'datum', 'count', 'actions'];
 
   dataSource = new MatTableDataSource<Lista>([]);
-  loading = false;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -44,15 +43,13 @@ export class EditListaComponent implements OnInit, AfterViewInit{
   }
 
   load(): void {
-    this.loading = true;
+   
     this.listaService.getAllListe().subscribe({
       next: (liste) => {
         this.dataSource.data = liste || [];
-        this.loading = false;
       },
       error: () => {
-        this.loading = false;
-        this.snackBar.open('Greška prilikom učitavanju lista.', 'Zatvori', {
+        this.snackBar.open('Greška prilikom učitavanja lista.', 'Zatvori', {
           duration: 3000,
           panelClass: ['snack-erorr'],
           horizontalPosition: 'right',

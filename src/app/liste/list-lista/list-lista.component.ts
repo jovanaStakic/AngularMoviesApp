@@ -73,7 +73,7 @@ export class ListListaComponent implements OnInit, AfterViewInit {
           this.load();
         },
         error: () => {
-          this.snack.open('Brisanje nije uspelo.', 'Zatvori', {
+          this.snack.open('Greška prilikom brisanja liste.', 'Zatvori', {
             duration: 3000,
             panelClass: ['snack-erorr'],
             horizontalPosition: 'right',

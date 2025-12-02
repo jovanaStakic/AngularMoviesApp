@@ -30,7 +30,7 @@ export class RegisterComponent {
         this.router.navigate(['/home']);
       },
       error:()=>{
-        this.snackBar.open('Neuspešna registracija.',"Zatvori",
+        this.snackBar.open('Greška prilikom registracije.',"Zatvori",
           { duration: 3000, panelClass: ['snack-error'],
           horizontalPosition: 'right',
           verticalPosition: 'top'});

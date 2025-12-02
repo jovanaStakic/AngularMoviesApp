@@ -71,7 +71,7 @@ export class SearchFilmComponent {
     const criteria: SearchFilm = this.searchForm.value;
     this.filmService.searchFilms(criteria).subscribe({
       next: (films) => {
-        this.snackBar.open('Filmovi su pronađeni.', 'OK', {
+        this.snackBar.open('Pronađeni su filmovi.', 'OK', {
           duration: 3000,
           panelClass: ['snack-success'],
           horizontalPosition: 'right',
@@ -87,7 +87,7 @@ export class SearchFilmComponent {
         });
       },
       error: () => {
-        this.snackBar.open('Greška prilikom pretrage filmova.', 'Zatvori', {
+        this.snackBar.open('Nema filmova za zadati kriterijum pretrage.', 'Zatvori', {
           duration: 3000,
           panelClass: ['snack-error'],
           horizontalPosition: 'right',

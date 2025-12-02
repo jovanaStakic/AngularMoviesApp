@@ -60,7 +60,7 @@ export class SearchListaComponent {
       },
       error: () => {
         this.resultsData.data = [];
-        this.snackBar.open('Greška prilikom pretrage lista.', 'Zatvori', {
+        this.snackBar.open('Nema lista za zadati kriterijum pretrage.', 'Zatvori', {
           duration: 3000,
           panelClass: ['snack-erorr'],
           horizontalPosition: 'right',

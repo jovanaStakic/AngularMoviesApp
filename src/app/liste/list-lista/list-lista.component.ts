@@ -7,6 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { ListaDetailsDialogComponent } from '../lista-details-dialog/lista-details-dialog.component';
 import { MatPaginator } from '@angular/material/paginator';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-list-lista',
@@ -19,6 +20,7 @@ export class ListListaComponent implements OnInit, AfterViewInit {
   displayedColumns = ['naziv', 'datum', 'count', 'detalji', 'actions'];
   dataSource = new MatTableDataSource<Lista>([]);
 
+  searchControl = new FormControl<string>('');
   constructor(
     private listaService: ListaService,
     private dialog: MatDialog,
@@ -26,25 +28,49 @@ export class ListListaComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit(): void {
-    this.load();
+   
   }
 
   ngAfterViewInit(): void{
     this.dataSource.paginator = this.paginator;
   }
 
-  load(): void {
-    this.listaService.getAllListe().subscribe({
-      next: (liste: Lista[]) => {
-        this.dataSource.data = liste || [];
-      },
-      error: () => {
-        this.snack.open('Greška pri učitavanju lista.', 'Zatvori', {
-          duration: 3000,
-        });
-      },
+  search(): void {
+  const naziv = (this.searchControl.value || '').trim();
+
+  if (!naziv) {
+    this.dataSource.data = [];
+    if (this.paginator) {
+      this.paginator.firstPage();
+    }
+    this.snack.open('Unesite naziv liste za pretragu.', 'Zatvori', {
+      duration: 3000,
+      horizontalPosition: 'right',
+      verticalPosition: 'top',
     });
+    return;
   }
+
+  this.listaService.searchListe(naziv).subscribe({
+    next: (liste: Lista[]) => {
+      this.dataSource.data = liste || [];
+      
+      if (this.paginator) {
+        this.paginator.firstPage();
+      }
+
+      
+    },
+    error: () => {
+      this.snack.open('Greška pri učitavanju lista.', 'Zatvori', {
+        duration: 3000,
+        panelClass: ['snack-erorr'],
+        horizontalPosition: 'right',
+        verticalPosition: 'top',
+      });
+    },
+  });
+}
 
   confirmDelete(row: Lista): void {
     const ref = this.dialog.open(ConfirmDialogComponent, {
@@ -64,13 +90,13 @@ export class ListListaComponent implements OnInit, AfterViewInit {
 
       this.listaService.deleteLista(row.id).subscribe({
         next: () => {
-          this.snack.open(`Lista  uspešno obrisana.`, 'OK', {
+          this.snack.open(`Uspešno obrisana lista.`, 'OK', {
             duration: 3000,
             panelClass: ['snack-success'],
             horizontalPosition: 'right',
             verticalPosition: 'top',
           });
-          this.load();
+          this.search(); 
         },
         error: () => {
           this.snack.open('Greška prilikom brisanja liste.', 'Zatvori', {

@@ -133,7 +133,7 @@ export class CreateListaComponent {
         this.resetForm();
       },
       error: () => {
-        this.snackBar.open('Greška prilikom brisanja liste.', 'Zatvori', {
+        this.snackBar.open('Greška prilikom kreiranja liste.', 'Zatvori', {
           duration: 3000,
           horizontalPosition: 'right',
           verticalPosition: 'top',

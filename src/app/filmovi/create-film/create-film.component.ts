@@ -159,7 +159,7 @@ export class CreateFilmComponent implements OnInit,OnDestroy {
         this.resetForm();
       },
       error: () => {
-        this.snackBar.open('Greška pri čuvanju filma.', 'Zatvori', {
+        this.snackBar.open('Greška prilikom čuvanja filma.', 'Zatvori', {
           duration: 3000,
           horizontalPosition: 'right',
           verticalPosition: 'top',

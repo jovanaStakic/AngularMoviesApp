@@ -4,6 +4,23 @@
   </mat-card-header>
   <mat-divider></mat-divider>
   <mat-card-content>
+    <mat-form-field appearance="outline" class="film-select">
+      <mat-label>Odaberite film da biste prikazali recenzije.</mat-label>
+      <mat-select [formControl]="filmControl">
+        <ngx-mat-select-search
+          [formControl]="filmFilterControl"
+          placeholderLabel="Pretraži filmove..."
+          noEntriesFoundLabel="Nema rezultata">
+        </ngx-mat-select-search>
+
+        <mat-option *ngFor="let f of filteredFilmovi" [value]="f.id">
+          {{ f.naziv }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    
+
     <table mat-table [dataSource]="dataSource" class="full-width">
       <ng-container matColumnDef="film">
         <th mat-header-cell *matHeaderCellDef>Film</th>

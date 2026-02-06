@@ -18,6 +18,7 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { MatTableModule } from '@angular/material/table';
 import { ListRecenzijaComponent } from './list-recenzija/list-recenzija.component';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import { ListRecenzijaComponent } from './list-recenzija/list-recenzija.componen
     MatIconModule,
     MatPaginatorModule,
     MatTooltipModule,
-    MatTableModule
+    MatTableModule,
+    NgxMatSelectSearchModule
   ]
 })
 export class RecenzijeModule { }

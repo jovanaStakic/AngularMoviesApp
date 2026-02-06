@@ -129,7 +129,7 @@ export class ListaEditDialogComponent {
       },
       error: () => {
         this.saving = false;
-        this.snackBar.open('Čuvanje nije uspelo.', 'Zatvori', {
+        this.snackBar.open('Greška prilikom izmene liste.', 'Zatvori', {
           duration: 3000,
           panelClass: ['snack-erorr'],
           horizontalPosition: 'right',

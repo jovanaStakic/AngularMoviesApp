@@ -4,17 +4,27 @@
   </mat-card-header>
   <mat-divider class="form-divider"></mat-divider>
   <mat-card-content>
+     <mat-form-field appearance="outline" class="lista-search">
+      <mat-label>Pretraži liste po nazivu</mat-label>
+      <input
+        matInput
+        [formControl]="searchControl"
+        placeholder="npr. Omiljeni"
+        (keyup.enter)="search()"
+      />
+      <button
+        mat-icon-button
+        matSuffix
+        (click)="search()"
+        aria-label="Pretraži liste"
+      >
+        <mat-icon>search</mat-icon>
+      </button>
+    </mat-form-field>
     <table mat-table [dataSource]="dataSource" class="liste-table" matSort>
       <ng-container matColumnDef="naziv">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>
           Naziv
-          <mat-form-field appearance="outline" class="filter-field">
-            <input
-              matInput
-              (keyup)="applyFilter($any($event.target).value)"
-              placeholder="npr. Omiljeni"
-            />
-          </mat-form-field>
         </th>
         <td mat-cell *matCellDef="let l">{{ l.nazivListe }}</td>
       </ng-container>

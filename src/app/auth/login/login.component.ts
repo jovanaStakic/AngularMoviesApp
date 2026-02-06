@@ -26,7 +26,7 @@ export class LoginComponent {
         this.router.navigate(['/home']);
       },
       error:(error)=>{
-        this.snackBar.open('Neuspešno prijavljivanje.',"Zatvori",
+        this.snackBar.open('Pogrešno korisničko ime i/ili lozinka.',"Zatvori",
           { duration: 3000, panelClass: ['snack-error'],
           horizontalPosition: 'right',
           verticalPosition: 'top'});

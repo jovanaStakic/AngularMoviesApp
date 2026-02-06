@@ -50,6 +50,14 @@ export class SearchListaComponent {
 
     this.listaService.searchListe(naziv).subscribe({
       next: (liste) => {
+        if (!liste || liste.length === 0) {
+          this.snackBar.open('Nema lista za zadati kriterijum pretrage.', 'Zatvori', {
+            duration: 3000,
+            horizontalPosition: 'right',
+            verticalPosition: 'top',
+            panelClass: ['snack-error'],
+          });
+        }else{
         this.snackBar.open(`Liste su uspešno pronadjene.`, 'OK', {
           duration: 3000,
           panelClass: ['snack-success'],
@@ -57,6 +65,7 @@ export class SearchListaComponent {
           verticalPosition: 'top',
         });
         this.resultsData.data = liste ;
+      }
       },
       error: () => {
         this.resultsData.data = [];

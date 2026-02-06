@@ -6,6 +6,18 @@
 
   <mat-card-content>
 
+    <mat-form-field appearance="outline" class="lista-search">
+      <mat-label>Prvo pretazite liste.</mat-label>
+      <input
+        matInput
+        [formControl]="searchControl"
+        placeholder="Unesite naziv liste"
+        (keyup.enter)="search()">
+
+      <button mat-icon-button matSuffix (click)="search()" aria-label="Pretraži">
+        <mat-icon>search</mat-icon>
+      </button>
+    </mat-form-field>
     <table mat-table [dataSource]="dataSource" class="full-width">
 
      

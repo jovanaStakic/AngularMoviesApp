@@ -7,6 +7,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ListaEditDialogComponent } from '../lista-edit-dialog/lista-edit-dialog.component';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-edit-lista',
@@ -22,6 +23,7 @@ export class EditListaComponent implements OnInit, AfterViewInit{
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
+  searchControl = new FormControl<string>('');
   constructor(
     private listaService: ListaService,
     private dialog: MatDialog,
@@ -29,45 +31,53 @@ export class EditListaComponent implements OnInit, AfterViewInit{
   ) {}
 
   ngOnInit(): void {
-    this.load();
   }
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-
-    this.dataSource.filterPredicate = (row, filter) =>
-      (row.nazivListe || '')
-        .toLowerCase()
-        .includes(filter.trim().toLowerCase());
   }
 
-  load(): void {
-   
-    this.listaService.getAllListe().subscribe({
-      next: (liste) => {
-        this.dataSource.data = liste || [];
-      },
-      error: () => {
-        this.snackBar.open('Greška prilikom učitavanja lista.', 'Zatvori', {
+  search(): void {
+  const naziv = (this.searchControl.value || '').trim();
+
+  if (!naziv) {
+    this.dataSource.data = [];
+    this.paginator?.firstPage();
+    this.snackBar.open('Unesite naziv liste za pretragu.', 'Zatvori', {
+      duration: 3000,
+      horizontalPosition: 'right',
+      verticalPosition: 'top'
+    });
+    return;
+  }
+
+  this.listaService.searchListe(naziv).subscribe({
+    next: (liste) => {
+      this.dataSource.data = liste || [];
+      this.paginator?.firstPage();
+
+      if (!liste || liste.length === 0) {
+        this.snackBar.open('Nema lista za zadati kriterijum pretrage.', 'Zatvori', {
           duration: 3000,
           panelClass: ['snack-erorr'],
           horizontalPosition: 'right',
           verticalPosition: 'top'
         });
-      },
-    });
-  }
+      }
+    },
+    error: () => {
+      this.snackBar.open('Greška prilikom učitavanja lista.', 'Zatvori', {
+        duration: 3000,
+        panelClass: ['snack-erorr'],
+        horizontalPosition: 'right',
+        verticalPosition: 'top'
+      });
+    }
+  });
+}
 
-  applyFilter(val: string | null): void {
-    this.dataSource.filter = val ?? '';
-    if (this.paginator) this.paginator.firstPage();
-  }
 
-  applyTableFilterValue(val: string): void {
-    this.dataSource.filter = (val || '').trim().toLowerCase();
-    this.paginator?.firstPage();
-  }
 
   openEdit(row: Lista) {
     const ref = this.dialog.open(ListaEditDialogComponent, {
@@ -77,7 +87,9 @@ export class EditListaComponent implements OnInit, AfterViewInit{
     });
 
     ref.afterClosed().subscribe((changed) => {
-      if (changed) this.load();
+      if (changed){
+        this.search();
+      } 
     });
   }
 }

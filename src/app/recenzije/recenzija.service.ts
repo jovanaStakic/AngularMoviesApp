@@ -28,4 +28,9 @@ export class RecenzijaService {
     const url = `${this.apiUrl}/recenzije/${id}`;
     return this.httpClient.delete<void>(url);
   }
+
+  public getRecenzijeByFilm(filmId: number): Observable<Recenzija[]> {
+  const url = `${this.apiUrl}/recenzije/search?filmId=${filmId}`;
+  return this.httpClient.get<Recenzija[]>(url);
+}
 }

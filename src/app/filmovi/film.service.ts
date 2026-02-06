@@ -41,15 +41,20 @@ export class FilmService {
   searchFilms(criteria: SearchFilm): Observable<Film[]> {
     const url = `${this.apiUrl}/filmovi/search`;
     let params = new HttpParams();
-    if (criteria.naziv){
-       params = params.set('naziv', criteria.naziv);
+    if (criteria.naziv) {
+      params = params.set('naziv', criteria.naziv);
     }
-    if (criteria.reziserId){
+    if (criteria.reziserId) {
       params = params.set('reziserId', criteria.reziserId.toString());
     }
-    if (criteria.zanrId){
+    if (criteria.zanrId) {
       params = params.set('zanrId', criteria.zanrId.toString());
     }
     return this.httpClient.get<Film[]>(url, { params });
+  }
+
+  getAllFilmovi(): Observable<Film[]> {
+    const url = `${this.apiUrl}/filmovi`;
+    return this.httpClient.get<Film[]>(url);
   }
 }
